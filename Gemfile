@@ -57,3 +57,9 @@ group :test do
   gem 'tailwindcss-rails'
   gem "tailwindcss-ruby", "3.4.17"
 end
+#↓SNSログイン機能
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-facebook'
+gem 'omniauth-rails_csrf_protection'
+gem 'devise' #ログイン、ログアウト、新規登録のgem

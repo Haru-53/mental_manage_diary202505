@@ -21,3 +21,20 @@
     <%= yield %>
   </body>
 </html>
+
+<% if notice %>
+  <p class="alert alert-success"><%= notice %></p>
+<% end %>
+<% if alert %>
+  <p class="alert alert-danger"><%= alert %></p>
+<% end %>
+<nav>
+  <% if user_signed_in? %>
+    <span>ようこそ、<%= current_user.username %>さん</span>
+    <%= link_to 'プロフィール編集', edit_user_registration_path %>
+    <%= button_to 'ログアウト', destroy_user_session_path, method: :delete %>
+  <% else %>
+    <%= link_to 'ログイン', new_user_session_path %>
+    <%= link_to '新規登録', new_user_registration_path %>
+  <% end %>
+</nav>
