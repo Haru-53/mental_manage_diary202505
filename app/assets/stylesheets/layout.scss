@@ -1,0 +1,195 @@
+// 変数定義
+$primary-color: #1a365d;    // 深みのある青
+$accent-color: #ff6b6b;     // オレンジピンク系
+$text-light: #ffffff;
+$text-dark: #333333;
+$header-height: 60px;
+$footer-height: 120px;
+
+// 全体のレイアウト
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, sans-serif;
+}
+
+main.container {
+  flex: 1;
+  padding: 20px;
+  margin-top: $header-height;
+  margin-bottom: 20px;
+}
+
+// ヘッダースタイル
+.site-header {
+  background-color: $primary-color;
+  color: $text-light;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: $header-height;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  height: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header-left, .header-right {
+  display: flex;
+  align-items: center;
+}
+
+.back-button, .home-button, .logout-button {
+  color: $text-light;
+  text-decoration: none;
+  margin-right: 15px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+  
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.logout-button {
+  background-color: $accent-color;
+  border: none;
+  cursor: pointer;
+  
+  &:hover {
+    background-color: darken($accent-color, 10%);
+  }
+}
+
+// ハンバーガーメニュー
+.hamburger-menu {
+  position: relative;
+  cursor: pointer;
+}
+
+.hamburger-icon {
+  font-size: 24px;
+  padding: 8px;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  min-width: 180px;
+  z-index: 1001;
+  
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    
+    li {
+      padding: 0;
+      
+      a {
+        display: block;
+        padding: 12px 15px;
+        color: $text-dark;
+        text-decoration: none;
+        transition: background-color 0.2s;
+        
+        &:hover {
+          background-color: #f5f5f5;
+          color: $accent-color;
+        }
+      }
+    }
+  }
+  
+  &.show {
+    display: block;
+  }
+}
+
+// ホバー時も表示できるようにする（タッチデバイス以外）
+@media (hover: hover) {
+  .hamburger-menu:hover .dropdown-menu {
+    display: block;
+  }
+}
+
+// フッタースタイル
+.site-footer {
+  background-color: $primary-color;
+  color: $text-light;
+  padding: 20px 0;
+  margin-top: auto;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer-links {
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.footer-link {
+  color: $text-light;
+  text-decoration: none;
+  margin: 0 10px;
+  padding: 5px;
+  position: relative;
+  
+  &:hover {
+    color: $accent-color;
+    
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: $accent-color;
+    }
+  }
+}
+
+.footer-info {
+  text-align: center;
+  font-size: 14px;
+  
+  p {
+    margin: 5px 0;
+  }
+}
+
+// レスポンシブ対応
+@media (max-width: 768px) {
+  .header-container {
+    padding: 0 10px;
+  }
+  
+  .footer-container {
+    padding: 0 10px;
+  }
+}

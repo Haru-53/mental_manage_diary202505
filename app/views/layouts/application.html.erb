@@ -1,40 +1,65 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Myapp" %></title>
+    <title>あなたのアプリ名</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= yield :head %>
-
-    <link rel="manifest" href="/manifest.json">
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+    <%= javascript_importmap_tags %>
   </head>
 
   <body>
-    <%= yield %>
+    <!-- ヘッダー -->
+    <header class="site-header">
+      <div class="header-container">
+        <div class="header-left">
+          <!-- 戻るボタン -->
+          <%= link_to "←", :back, class: "back-button" unless current_page?(root_path) %>
+          <!-- ホームボタン -->
+          <%= link_to "ホーム", root_path, class: "home-button" %>
+        </div>
+        
+        <div class="header-right">
+          <!-- ログアウトボタン - ログインしている場合のみ表示 -->
+          <% if user_signed_in? %>
+            <%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "logout-button" %>
+          <% end %>
+          
+          <!-- ハンバーガーメニュー -->
+          <div class="hamburger-menu">
+            <span class="hamburger-icon">☰</span>
+            <div class="dropdown-menu">
+              <ul>
+                <li><%= link_to "メニュー1", "#" %></li>
+                <li><%= link_to "メニュー2", "#" %></li>
+                <li><%= link_to "メニュー3", "#" %></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="container">
+      <%= yield %>
+    </main>
+
+    <!-- フッター -->
+    <footer class="site-footer">
+      <div class="footer-container">
+        <div class="footer-links">
+          <%= link_to "お問い合わせ", contact_path, class: "footer-link" %>
+          <%= link_to "お知らせ", announcements_path, class: "footer-link" %>
+        </div>
+
+        <div class="footer-info">
+          <p>最終更新日: <%= Date.today.strftime('%Y年%m月%d日') %></p>
+          <p>author:haru</p>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>
-
-<% if notice %>
-  <p class="alert alert-success"><%= notice %></p>
-<% end %>
-<% if alert %>
-  <p class="alert alert-danger"><%= alert %></p>
-<% end %>
-<nav>
-  <% if user_signed_in? %>
-    <span>ようこそ、<%= current_user.username %>さん</span>
-    <%= link_to 'プロフィール編集', edit_user_registration_path %>
-    <%= button_to 'ログアウト', destroy_user_session_path, method: :delete %>
-  <% else %>
-    <%= link_to 'ログイン', new_user_session_path %>
-    <%= link_to '新規登録', new_user_registration_path %>
-  <% end %>
-</nav>

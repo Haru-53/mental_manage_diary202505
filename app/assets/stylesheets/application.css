@@ -13,3 +13,23 @@
  *= require_tree .
  *= require_self
  */
+/* ヘッダー用のスタイル */
+header, .header {
+  background-color: #1a365d; /* 深みのある青 */
+  color: white;
+  padding: 1rem 0;
+}
+
+/* フッター用のスタイル */
+footer, .footer {
+  background-color: #1a365d; /* 深みのある青 */
+  color: white;
+  padding: 1rem 0;
+  margin-top: 2rem;
+}
+
+/* アクセントカラーを使用する要素 */
+.accent-color, .btn-accent, .nav-highlight, .badge {
+  background-color: #ff6b6b; /* オレンジピンク系 */
+  color: white;
+}
