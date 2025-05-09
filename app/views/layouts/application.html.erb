@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>あなたのアプリ名</title>
+    <title>mental_manage_diaryメンタル管理日記</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -16,7 +16,7 @@
       <div class="header-container">
         <div class="header-left">
           <!-- 戻るボタン -->
-          <%= link_to "←", :back, class: "back-button" unless current_page?(root_path) %>
+          <%= link_to "戻る", "#", class: "back-button", onclick: "history.back(); return false;" %>
           <!-- ホームボタン -->
           <%= link_to "ホーム", root_path, class: "home-button" %>
         </div>
