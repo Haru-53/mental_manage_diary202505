@@ -33,3 +33,50 @@ footer, .footer {
   background-color: #ff6b6b; /* オレンジピンク系 */
   color: white;
 }
+
+.top-hero {
+  text-align: center;
+  padding: 60px 20px;
+  background: linear-gradient(to bottom, #f5f7fa, #c3cfe2);
+}
+
+.app-title {
+  font-size: 36px;
+  color: #1a365d;
+  margin-bottom: 20px;
+}
+
+.app-description {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 30px;
+}
+.accent-color, .btn-accent, .nav-highlight, .badge {
+  background-color: #ff6b6b;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 6px;
+  text-decoration: none;
+  display: inline-block;
+  font-weight: bold;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: darken(#ff6b6b, 10%);
+  }
+}
+body {
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+}
+.accent-color {
+  font-size: 16px;
+  letter-spacing: 1px;
+  text-transform: uppercase; // すべて大文字
+  border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    background-color: darken(#ff6b6b, 10%);
+    transform: translateY(-2px);
+  }
+}
