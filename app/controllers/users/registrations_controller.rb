@@ -1,11 +1,16 @@
-# frozen_string_literal: true
+
 class Users::RegistrationsController < Devise::RegistrationsController
   # サインアップパラメータを許可
   before_action :configure_sign_up_params, only: [:create]
 
   protected
   def after_sign_up_path_for(resource)
-    new_user_session_path  # ログインページへ
+    sessions_path  # ログインページへ
+  end
+
+  protected
+  def after_sign_in_path_for(resource)
+    new_diary_entry_path  # 日記編集ページへ
   end
   # サインアップ時のパラメータ設定
   def configure_sign_up_params

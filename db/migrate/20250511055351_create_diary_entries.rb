@@ -1,15 +1,13 @@
-class CreateDiaryEntries < ActiveRecord::Migration[7.2]
+class CreateDiaries < ActiveRecord::Migration[7.2]
   def change
-    create_table :diary_entries do |t|
+    create_table :diaries do |t|
+      t.references :user, null: false, foreign_key: true
       t.date :date, null: false
-      t.text :good_things, null: false
-      t.text :reflection, null: false
-      t.text :notes
-      t.integer :happiness_level
+      t.text :content
 
       t.timestamps
     end
-    
-    add_index :diary_entries, :date, unique: true
+
+    add_index :diaries, [:user_id, :date], unique: true
   end
 end

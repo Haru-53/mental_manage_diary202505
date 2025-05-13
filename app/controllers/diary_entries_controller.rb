@@ -108,6 +108,31 @@ class DiaryEntriesController < ApplicationController
   def set_diary_entry
     @diary_entry = DiaryEntry.find(params[:id])
   end
+
+  def calendar
+    diaries = current_user.diaries.where(date: Date.today.beginning_of_month..Date.today.end_of_month)
+    @diary_dates = diaries.pluck(:date)
+
+    @streak = calculate_streak(current_user.diaries)
+  end
+
+  private
+
+  def calculate_streak(diaries)
+    dates = diaries.order(date: :desc).pluck(:date)
+    streak = 0
+    today = Date.today
+
+    dates.each do |date|
+      if date == today - streak
+        streak += 1
+      else
+        break
+      end
+    end
+
+    streak
+  end
   
   def diary_entry_params
     params.require(:diary_entry).permit(:date, :reflection, :notes, :happiness_level, good_things_array: [])

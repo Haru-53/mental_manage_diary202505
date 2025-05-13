@@ -52,4 +52,8 @@ class DiaryEntry < ApplicationRecord
       entries: entries.order(date: :asc)
     }
   end
+
+  belongs_to :user
+
+  validates :date, presence: true, uniqueness: { scope: :user_id }
 end
