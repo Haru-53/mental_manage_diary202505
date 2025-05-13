@@ -1,0 +1,37 @@
+ja:
+  activerecord:
+    attributes:
+      user:
+        email: "メールアドレス"
+        password: "パスワード"
+        password_confirmation: "パスワード（確認）"
+        current_password: "現在のパスワード"
+        remember_me: "次回から自動的にログイン"
+
+        ja:
+  errors:
+    messages:
+      not_saved:
+        one: "%{resource}の保存に失敗しました: 1つのエラーがあります"
+        other: "%{resource}の保存に失敗しました: %{count}つのエラーがあります"
+
+        ja:
+  activerecord:
+    models:
+      user: ユーザー
+    attributes:
+      user:
+        username: ユーザー名
+        email: メールアドレス
+        password: パスワード
+        password_confirmation: パスワード（確認）
+    errors:
+      models:
+        user:
+          attributes:
+            username:
+              blank: を入力してください
+              too_short: は%{count}文字以上で入力してください
+              too_long: は%{count}文字以内で入力してください
+              taken: はすでに使用されています
+        

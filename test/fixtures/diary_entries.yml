@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2025-05-11
+  good_things: MyText
+  reflection: MyText
+  notes: MyText
+  happiness_level: 1
+
+two:
+  date: 2025-05-11
+  good_things: MyText
+  reflection: MyText
+  notes: MyText
+  happiness_level: 1

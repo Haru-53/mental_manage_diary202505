@@ -1,0 +1,29 @@
+<footer class="mt-5 pt-3 border-top text-center">
+<div class="mb-3">
+  <%= link_to calendar_diary_entries_path, class: "footer-link" do %>
+    <i class="fas fa-calendar-alt"></i> カレンダー
+  <% end %>
+  
+  <%= link_to search_diary_entries_path, class: "footer-link" do %>
+    <i class="fas fa-search"></i> 検索
+  <% end %>
+  
+  <%= link_to summary_diary_entries_path, class: "footer-link" do %>
+    <i class="fas fa-chart-pie"></i> 要約
+  <% end %>
+  
+  <%= link_to graph_diary_entries_path, class: "footer-link" do %>
+    <i class="fas fa-chart-line"></i> グラフ
+  <% end %>
+  
+  <%= link_to happiness_definition_diary_entries_path, class: "footer-link" do %>
+    <i class="fas fa-smile"></i> 幸福度定義
+  <% end %>
+</div>
+</footer>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

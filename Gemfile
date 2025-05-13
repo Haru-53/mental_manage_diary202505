@@ -65,3 +65,5 @@ gem 'omniauth-facebook'
 gem 'omniauth-rails_csrf_protection'
 gem 'devise' #ログイン、ログアウト、新規登録のgem
 gem 'importmap-rails'
+
+gem 'devise-i18n'

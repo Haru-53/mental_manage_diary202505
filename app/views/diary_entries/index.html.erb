@@ -1,0 +1,22 @@
+<h1>日記一覧</h1>
+
+<% if @diary_entries.present? %>
+  <div class="diary-entries">
+    <% @diary_entries.each do |entry| %>
+      <div class="diary-entry">
+        <h2><%= entry.title %></h2>
+        <p class="date"><%= entry.created_at.strftime('%Y年%m月%d日') %></p>
+        <div class="content">
+          <%= truncate(entry.content, length: 200) %>
+        </div>
+        <%= link_to '続きを読む', diary_entry_path(entry), class: 'read-more' %>
+      </div>
+    <% end %>
+  </div>
+  
+  <%= paginate @diary_entries if defined?(paginate) %>
+<% else %>
+  <p>まだ日記がありません。新しい日記を作成しましょう！</p>
+<% end %>
+
+<%= link_to '新しい日記を書く', new_diary_entry_path, class: 'btn btn-primary' %>
