@@ -80,3 +80,38 @@ body {
     transform: translateY(-2px);
   }
 }
+
+/* 全体のフォームを中央に配置 */
+.centered-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Noto Sans JP', sans-serif; /* トップページと統一する場合はここに指定 */
+  padding: 40px 20px;
+}
+
+/* タイトル中央寄せ */
+.registration-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+/* おしゃれな登録ボタン */
+.register-button {
+  background-color: #003366; /* 深い青 */
+  color: #fff;
+  font-size: 18px;
+  padding: 14px 30px;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-top: 20px;
+}
+
+.register-button:hover {
+  background-color: #002244;
+  transform: translateY(-2px);
+}

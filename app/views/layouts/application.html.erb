@@ -2,33 +2,55 @@
 <html>
   <head>
     <title>mental_manage_diaryメンタル管理日記</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
-    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c&display=swap" rel="stylesheet">
+
+    <!-- Google Fonts: 落ち着いたフォント -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    
     <!-- Bootstrap CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
     <style>
       body {
+        font-family: 'Noto Sans JP', sans-serif;
         display: flex;
         flex-direction: column;
         min-height: 100vh;
+        background-color: #f8f9fa;
       }
+
       .site-header {
-        /* ヘッダーのスタイルをここに */
+        background-color: #003366;
+        color: white;
+        padding: 10px 20px;
       }
+
+      .site-header a,
+      .site-header .btn {
+        color: white;
+        text-decoration: none;
+        margin-right: 10px;
+      }
+
+      .site-header a:hover,
+      .site-header .btn:hover {
+        background-color: #002244;
+        color: white;
+      }
+
       .main-content-wrapper {
         flex: 1;
-        display: flex;
-        flex-direction: column;
-        padding-top: 80px;    /* ↑上の余白を大きく */
-        padding-bottom: 80px; /* ↓下の余白を大きく */
+        padding-top: 80px;
+        padding-bottom: 80px;
       }
+
       .content-container {
         background-color: #fff;
         border-radius: 10px;
@@ -36,52 +58,120 @@
         padding: 30px;
         margin-bottom: 20px;
       }
+
       .site-footer {
-        margin-top: auto;
-        /* フッターのスタイルをここに */
+        background-color: #003366;
+        color: white;
+        text-align: center;
+        padding: 20px;
       }
+
       .footer-link {
         text-decoration: none;
-        color: #6c757d;
+        color: white;
         margin: 0 15px;
         display: inline-flex;
         align-items: center;
       }
-      .footer-link i {
-        margin-right: 5px;
-      }
+
       .footer-link:hover {
-        color: #0d6efd;
+        color: #99ccff;
       }
-      .date-header {
+
+      .hamburger-menu {
+        position: relative;
+        display: inline-block;
+      }
+
+      .hamburger-icon {
+        cursor: pointer;
         font-size: 1.5rem;
-        font-weight: bold;
-        color: #343a40;
+        color: white;
       }
+
+      .hamburger-menu .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 30px;
+        right: 0;
+        background-color: white;
+        min-width: 220px;
+        max-height: 80vh;
+        overflow-y: auto;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        border-radius: 5px;
+        z-index: 1000;
+        padding: 10px 0;
+      }
+
+      .hamburger-menu:hover .dropdown-menu {
+        display: block;
+      }
+
+      .dropdown-menu ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .dropdown-menu li {
+        margin: 0;
+      }
+
+      .dropdown-menu a {
+        color: #333;
+        text-decoration: none;
+        display: block;
+        padding: 10px 15px;
+        font-size: 0.9rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .dropdown-menu a:hover {
+        background-color: #f0f0f0;
+      }
+
+      .alert {
+        margin-top: 20px;
+      }
+      <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
     </style>
   </head>
 
-  <body class="bg-light">
+  <body>
     <!-- ヘッダー -->
     <header class="site-header">
-      <div class="header-container">
+      <div class="d-flex justify-content-between align-items-center">
         <div class="header-left">
-          <%= link_to "戻る", "#", class: "back-button", onclick: "history.back(); return false;" %>
-          <%= link_to "ホーム", root_path, class: "home-button" %>
+          <%= link_to "戻る", "#", class: "btn btn-link", onclick: "history.back(); return false;" %>
+          <%= link_to "ホーム", root_path, class: "btn btn-link" %>
         </div>
-        
-        <div class="header-right">
+
+        <div class="header-right d-flex align-items-center">
           <% if user_signed_in? %>
-            <%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "logout-button" %>
+            <%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "btn btn-outline-light btn-sm me-2" %>
           <% end %>
-          
+
           <div class="hamburger-menu">
             <span class="hamburger-icon">☰</span>
             <div class="dropdown-menu">
               <ul>
-                <li><%= link_to "📝日記を書く", "#" %></li>
-                <li><%= link_to "📅カレンダーを見る", "#" %></li>
-                <li><%= link_to "💓幸福測定ページ", "#" %></li>
+                <li><%= link_to "👀 アプリの使い方", how_to_use_path %></li>
+                <li><%= link_to "📝 試しに使ってみる", trial_path %></li>
+                <li><%= link_to "📝 新規登録", new_user_registration_path %></li>
+                <li><%= link_to "📝 ログイン", new_user_session_path %></li>
+                <li><%= link_to "📝 日記を書く", new_diary_entry_path %></li>
+                <li><%= link_to "📅 カレンダー", calendar_diary_entries_path %></li>
+                <li><%= link_to "📈 グラフ", graph_diary_entries_path %></li>
+                <li><%= link_to "💓 幸福度定義", happiness_definition_diary_entries_path %></li>
+                <li><%= link_to "📋 日記要約", summary_diary_entries_path %></li>
+                <li><%= link_to "🔍 日記検索", search_diary_entries_path %></li>
+                <li><%= link_to "📤 SNS共有", "#" %></li>
+                <li><%= link_to "⚙️ 設定", "#" %></li>
+                <li><%= link_to "🎷 お知らせ", announcements_path %></li>
+                <li><%= link_to "📩 お問合せ・要望", contact_path %></li>
               </ul>
             </div>
           </div>
@@ -89,7 +179,7 @@
       </div>
     </header>
 
-    <!-- メインコンテンツ領域 - 大きな上下の余白を追加 -->
+    <!-- メイン -->
     <div class="main-content-wrapper">
       <div class="container">
         <% if notice %>
@@ -98,7 +188,14 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
         <% end %>
-        
+
+        <% flash.each do |key, message| %>
+          <div class="alert alert-<%= key == 'notice' ? 'success' : 'danger' %> alert-dismissible fade show" role="alert">
+            <%= message %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        <% end %>
+
         <div class="content-container">
           <%= yield %>
         </div>
@@ -108,13 +205,13 @@
     <!-- フッター -->
     <footer class="site-footer">
       <div class="footer-container">
-        <div class="footer-links">
-          <%= link_to "お問い合わせ・要望・改善依頼", contact_path, class: "footer-link" %>
-          <%= link_to "お知らせ", announcements_path, class: "footer-link" %>
+        <div class="footer-links mb-2">
+          <%= link_to "📩 お問い合わせ・ご要望", contact_path, class: "footer-link" %>
+          <%= link_to "🎷 お知らせ", announcements_path, class: "footer-link" %>
         </div>
         <div class="footer-info">
           <p>最終更新日: <%= Date.today.strftime('%Y年%m月%d日') %></p>
-          <p>author:haru</p>
+          <p>author: haru</p>
         </div>
       </div>
     </footer>
@@ -123,10 +220,3 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
-
-<%# フラッシュメッセージの表示 %>
-<% flash.each do |key, message| %>
-  <div class="alert alert-<%= key == 'notice' ? 'success' : 'danger' %>">
-    <%= message %>
-  </div>
-<% end %>

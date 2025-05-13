@@ -1,0 +1,31 @@
+<h1>幸福度定義</h1>
+
+<%= form_with url: update_all_happiness_items_path, method: :patch do %>
+  <table>
+    <tr>
+      <th>項目</th>
+      <th>説明</th>
+      <th>重み</th>
+      <th>満足？</th>
+    </tr>
+    <% @happiness_items.each do |item| %>
+      <tr>
+        <td><%= text_field_tag "items[#{item.id}][name]", item.name %></td>
+        <td><%= text_area_tag "items[#{item.id}][description]", item.description %></td>
+        <td><%= number_field_tag "items[#{item.id}][weight]", item.weight, min: 0 %></td>
+        <td><%= check_box_tag "items[#{item.id}][satisfied]", true, item.satisfied %></td>
+      </tr>
+    <% end %>
+  </table>
+  <%= submit_tag "更新する" %>
+<% end %>
+
+<hr>
+
+<h2>自動計算された幸福度：<%= @calculated_score %>%</h2>
+
+<%= form_with url: update_score_happiness_items_path, method: :patch do %>
+  <label>手動修正：</label>
+  <%= number_field_tag "happiness_score[value]", @happiness_score.value || @calculated_score, min: 0, max: 100 %> %
+  <%= submit_tag "保存" %>
+<% end %>
