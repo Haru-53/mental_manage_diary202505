@@ -145,8 +145,12 @@
     <header class="site-header">
       <div class="d-flex justify-content-between align-items-center">
         <div class="header-left">
-          <%= link_to "戻る", "#", class: "btn btn-link", onclick: "history.back(); return false;" %>
-          <%= link_to "ホーム", root_path, class: "btn btn-link" %>
+          <% if current_page?(root_path) %>
+            <!-- トップページでは戻るボタンとホームボタンを非表示 -->
+          <% else %>
+            <%= link_to "戻る", "#", class: "btn btn-link", onclick: "history.back(); return false;" %>
+            <%= link_to "ホーム", root_path, class: "btn btn-link" %>
+          <% end %>
         </div>
 
         <div class="header-right d-flex align-items-center">

@@ -1,34 +1,19 @@
-<h2 class="registration-title text-center">アカウント登録</h2>
-
-<div class="centered-form">
-  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-    <%= render "devise/shared/error_messages", resource: resource %>
-
-    <div class="field mb-4">
-      <%= f.label :email, class: "form-label" %><br />
-      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control text-center" %>
-    </div>
-
-    <div class="field mb-4">
-      <%= f.label :username, class: "form-label" %><br />
-      <%= f.text_field :username, autofocus: true, class: "form-control" %>
-    </div>
-
-    <div class="field mb-4">
-      <%= f.label :"パスワード", class: "form-label" %><br />
-      <% if @minimum_password_length %>
-        <em>(<%= @minimum_password_length %> characters minimum)</em>
-      <% end %><br />
-      <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
-    </div>
-
-    <div class="field mb-4">
-      <%= f.label :password_confirmation, class: "form-label" %><br />
-      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
-    </div>
-
-    <div class="actions d-flex justify-content-center">
-      <%= f.submit "登録", class: "btn btn-primary" %>
-    </div>
-  <% end %>
-</div>
+<h2>新規登録</h2>
+<% if flash[:notice] %>
+<%= flash[:notice] %> 
+<% end %> <% if flash[:alert] %>
+<%= flash[:alert] %> 
+<% end %> <% if resource.errors.any? %>
+<%= pluralize(resource.errors.count, "つのエラー") %>があります
+<% resource.errors.full_messages.each do |message| %>
+<%= message %>
+<% end %>
+<% end %>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+<%= f.label :email, "メールアドレス", class: "form-label fw-bold" %> <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "example@mail.com" %>
+<%= f.label :username, "ユーザー名", class: "form-label fw-bold" %> <%= f.text_field :username, class: "form-control", placeholder: "ユーザー名を入力" %>
+<%= f.label :password, "パスワード", class: "form-label fw-bold" %> <% if @minimum_password_length %> （<%= @minimum_password_length %> 文字以上） <% end %> <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
+<%= f.label :password_confirmation, "パスワード（確認）", class: "form-label fw-bold" %> <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
+<%= f.submit "アカウント登録", class: "btn btn-primary btn-lg" %>
+<% end %>
+すでにアカウントをお持ちですか？ <%= link_to "ログイン", new_session_path(resource_name) %>

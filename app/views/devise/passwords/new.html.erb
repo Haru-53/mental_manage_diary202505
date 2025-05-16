@@ -1,16 +1,40 @@
-<h2>パスワードを忘れましたか？</h2>
+<h2>パスワードをお忘れですか？</h2>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "パスワードをリセットします" %>
+<% if flash[:notice] %>
+  <div class="alert alert-success">
+    <%= flash[:notice] %>
   </div>
 <% end %>
 
-<%= render "devise/shared/links" %>
+<% if flash[:alert] %>
+  <div class="alert alert-danger">
+    <%= flash[:alert] %>
+  </div>
+<% end %>
+
+<% if resource.errors.any? %>
+  <div class="alert alert-danger">
+    <%= pluralize(resource.errors.count, "つのエラー") %>があります
+    <ul>
+      <% resource.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+  <div class="field mb-3">
+    <%= f.label :email, "メールアドレス", class: "form-label fw-bold" %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "example@mail.com" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "パスワード再設定の手順を送信", class: "btn btn-primary btn-lg" %>
+  </div>
+<% end %>
+
+<div class="mt-3">
+  アカウントをお持ちですか？ <%= link_to "ログイン", new_session_path(resource_name) %><br />
+  アカウントをお持ちでないですか？ <%= link_to "アカウント登録", new_registration_path(resource_name) %>
+</div>

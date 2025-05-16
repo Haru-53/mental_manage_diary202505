@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
     # ログイン後のリダイレクト先を設定
     def after_sign_in_path_for(resource)
-      diaries_path # 日記一覧ページへ遷移（パスは実際のルーティングに合わせて変更）
+      diary_entries_path# 日記一覧ページへ遷移（パスは実際のルーティングに合わせて変更）
       # または edit_diary_path(@diary) など特定の日記編集ページへ
     end
   
@@ -17,4 +17,13 @@ class ApplicationController < ActionController::Base
     def after_sign_out_path_for(resource_or_scope)
       new_user_session_path # ログアウト後はログインページへ
     end
+
+      protected
+  
+  # Deviseのストロングパラメータ設定
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:name])
+  end
+
 end
