@@ -1,0 +1,160 @@
+<!-- app/views/diary_entries/new.html.erb -->
+<div class="diary-form-container">
+  <div class="diary-header">
+    <h1 class="text-center mb-4">今日はどんな日でしたか？</h1>
+    
+    <div class="date-display text-center mb-4">
+      <span class="current-date">
+        <%= Date.today.strftime('%Y年%m月%d日') %> (<%= I18n.t('date.abbr_day_names')[Date.today.wday] %>)
+      </span>
+    </div>
+  </div>
+
+  <%= form_with(model: @diary_entry, local: true, class: "diary-form") do |form| %>
+    <% if @diary_entry.errors.any? %>
+      <div class="alert alert-danger">
+        <h4><%= pluralize(@diary_entry.errors.count, "error") %> 入力内容に問題があります:</h4>
+        <ul>
+          <% @diary_entry.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= form.hidden_field :date, value: Date.today %>
+
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header bg-success text-white">
+        <h3 class="mb-0"><i class="fas fa-smile"></i> 今日のよかったこと（3つ）</h3>
+      </div>
+      <div class="card-body">
+        <div class="good-things-container">
+          <% 3.times do |i| %>
+            <div class="mb-3 good-thing-item">
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-star"></i></span>
+                <%= form.text_field "good_things_array[#{i}]", class: "form-control", placeholder: "good thing#{i+1}" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header bg-warning">
+        <h3 class="mb-0"><i class="fas fa-lightbulb"></i> 反省点・改善点</h3>
+      </div>
+      <div class="card-body">
+        <%= form.text_area :reflection, class: "form-control", rows: 3, placeholder: "今日の反省点や明日に向けての改善点を書いてみましょう" %>
+      </div>
+    </div>
+
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header bg-info text-white">
+        <h3 class="mb-0"><i class="fas fa-pencil-alt"></i> メモ・自由記入欄</h3>
+      </div>
+      <div class="card-body">
+        <%= form.text_area :notes, class: "form-control", rows: 5, placeholder: "その他、今日思ったことや感じたことなど自由に書いてみましょう" %>
+      </div>
+    </div>
+
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header bg-primary text-white">
+        <h3 class="mb-0"><i class="fas fa-heart"></i> 今日の幸福度</h3>
+      </div>
+      <div class="card-body">
+        <div class="happiness-level-container">
+          <div class="range-container">
+            <div class="d-flex justify-content-between mb-2">
+              <small>1 (低)</small>
+              <small>5 (中)</small>
+              <small>10 (高)</small>
+            </div>
+            <%= form.range_field :happiness_level, min: 1, max: 10, class: "form-range", value: 5 %>
+          </div>
+          <div class="text-center mt-2">
+            <div id="happiness-value">5</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions text-center mb-4">
+      <%= form.submit "日記を保存する", class: "btn btn-primary btn-lg px-5" %>
+    </div>
+  <% end %>
+  <%= render 'shared/diary_nav_footer' %>
+</div>
+
+<style>
+  :root {
+    --main-blue: #003366;
+    --accent-pink-orange: #FF6B6B;
+  }
+
+  .diary-form-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .date-display {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: var(--accent-pink-orange);
+    padding: 10px;
+    border-radius: 8px;
+    display: inline-block;
+  }
+  
+  .card-header {
+    background-color: var(--main-blue) !important;
+    color: #fff;
+  }
+
+  .card-header h3 {
+    font-size: 1.25rem;
+  }
+  
+  .happiness-level-container {
+    padding: 10px 20px;
+  }
+  
+  #happiness-value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--main-blue);
+  }
+  
+  .form-actions .btn {
+    background-color: var(--accent-pink-orange);
+    border-color: var(--accent-pink-orange);
+    color: #fff;
+    transition: all 0.3s;
+  }
+  
+  .form-actions .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    background-color: #e85b5b;
+    border-color: #e85b5b;
+  }
+</style>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const happinessRange = document.querySelector('input[name="diary_entry[happiness_level]"]');
+    const happinessValue = document.getElementById('happiness-value');
+    
+    if (happinessRange && happinessValue) {
+      // 初期値を表示
+      happinessValue.textContent = happinessRange.value;
+      
+      // スライダーの値が変わったときに表示を更新
+      happinessRange.addEventListener('input', function() {
+        happinessValue.textContent = this.value;
+      });
+    }
+  });
+</script>

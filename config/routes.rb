@@ -6,9 +6,9 @@ Rails.application.routes.draw do
   }
 
   # ログイン後のリダイレクト先
-  authenticated :user do
-    root 'diaries#index', as: :authenticated_root
-  end
+authenticated :user do
+  root 'diary_entries#index', as: :authenticated_root
+end
 
   # 未認証ユーザーのルート
   unauthenticated do
@@ -49,7 +49,7 @@ Rails.application.routes.draw do
   end
 
   # 日記（カレンダー含む）
-  resources :diaries do
+  resources :diary_entries do
     collection do
       get :calendar
     end

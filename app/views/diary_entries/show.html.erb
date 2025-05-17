@@ -1,0 +1,156 @@
+<div class="diary-show-container">
+  <div class="diary-header mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+      <h1 class="diary-title">
+        <%= @diary_entry.date.strftime('%Y年%m月%d日') %> (<%= I18n.t('date.abbr_day_names')[@diary_entry.date.wday] %>) の日記
+      </h1>
+      <div class="diary-actions">
+        <%= link_to edit_diary_entry_path(@diary_entry), class: "btn btn-outline-primary me-2" do %>
+          <i class="fas fa-edit"></i> 編集
+        <% end %>
+        <%= button_to diary_entry_path(@diary_entry), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-outline-danger" do %>
+          <i class="fas fa-trash"></i> 削除
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="happiness-indicator mb-4">
+    <div class="card bg-light">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center">
+          <h3 class="mb-0">今日の幸福度</h3>
+          <div class="happiness-score">
+            <span class="happiness-value"><%= @diary_entry.happiness_level || "-" %></span><span class="happiness-max">/10</span>
+          </div>
+        </div>
+        <% if @diary_entry.happiness_level %>
+          <div class="progress mt-2" style="height: 10px;">
+            <div class="progress-bar bg-success" role="progressbar" 
+                style="width: <%= (@diary_entry.happiness_level * 10) %>%;" 
+                aria-valuenow="<%= @diary_entry.happiness_level %>" 
+                aria-valuemin="0" aria-valuemax="10">
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="diary-sections">
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header bg-success text-white">
+        <h3 class="mb-0"><i class="fas fa-smile"></i> 今日のよかったこと</h3>
+      </div>
+      <div class="card-body">
+        <% if @diary_entry.good_things_array.present? && @diary_entry.good_things_array.any?(&:present?) %>
+          <ul class="good-things-list">
+            <% @diary_entry.good_things_array.each do |good_thing| %>
+              <% if good_thing.present? %>
+                <li><%= good_thing %></li>
+              <% end %>
+            <% end %>
+          </ul>
+        <% else %>
+          <p class="text-muted">よかったことは記録されていません</p>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header bg-warning">
+        <h3 class="mb-0"><i class="fas fa-lightbulb"></i> 反省点・改善点</h3>
+      </div>
+      <div class="card-body">
+        <% if @diary_entry.reflection.present? %>
+          <p class="reflection-text"><%= simple_format(@diary_entry.reflection) %></p>
+        <% else %>
+          <p class="text-muted">反省点は記録されていません</p>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header bg-info text-white">
+        <h3 class="mb-0"><i class="fas fa-pencil-alt"></i> メモ・自由記入欄</h3>
+      </div>
+      <div class="card-body">
+        <% if @diary_entry.notes.present? %>
+          <div class="notes-text"><%= simple_format(@diary_entry.notes) %></div>
+        <% else %>
+          <p class="text-muted">メモは記録されていません</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="navigation-links mt-5 d-flex justify-content-between">
+    <%= link_to diary_entries_path, class: "btn btn-outline-secondary" do %>
+      <i class="fas fa-arrow-left"></i> 日記一覧へ戻る
+    <% end %>
+    <%= link_to new_diary_entry_path, class: "btn btn-primary" do %>
+      <i class="fas fa-plus"></i> 新しい日記を書く
+    <% end %>
+  </div>
+</div>
+
+<style>
+  .diary-show-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .diary-title {
+    font-size: 1.8rem;
+    color: #333;
+  }
+  
+  .happiness-score {
+    display: flex;
+    align-items: baseline;
+  }
+  
+  .happiness-value {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #28a745;
+  }
+  
+  .happiness-max {
+    font-size: 1.2rem;
+    color: #6c757d;
+    margin-left: 2px;
+  }
+  
+  .good-things-list {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  .good-things-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 30px;
+  }
+  
+  .good-things-list li:last-child {
+    border-bottom: none;
+  }
+  
+  .good-things-list li:before {
+    content: "✓";
+    color: #28a745;
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+  }
+  
+  .reflection-text, .notes-text {
+    line-height: 1.6;
+  }
+  
+  .card-header h3 {
+    font-size: 1.25rem;
+  }
+</style>

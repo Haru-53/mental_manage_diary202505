@@ -1,20 +1,24 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  # Deviseのモジュール
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
-         :trackable
+         :recoverable, :rememberable, :validatable
 
   # バリデーション
   validates :username, 
     presence: true, 
-    uniqueness: true, 
+    uniqueness: true,
     length: {
-      minimum: 2,    # 最小2文字
-      maximum: 20    # 最大20文字
-    }, 
+      minimum: 2,
+      maximum: 20
+    },
     format: {
-      with: /\A[a-zA-Z0-9_]+\z/,  # 英数字とアンダーバーのみ許可
+      with: /\A[a-zA-Z0-9_]+\z/,
       message: "は英数字とアンダーバーのみ使用できます"
     }
+
+  validates :email,
+    presence: true,
+    uniqueness: true
+
+    has_many :diary_entries
 end

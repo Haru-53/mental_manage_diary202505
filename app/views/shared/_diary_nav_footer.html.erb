@@ -1,0 +1,42 @@
+<footer class="mt-5 pt-3 border-top text-center">
+  <div class="mb-3">
+    <%= link_to calendar_diary_entries_path, class: "footer-link" do %>
+      <i class="fas fa-calendar-alt"></i> カレンダー
+    <% end %>
+    
+    <%= link_to search_diary_entries_path, class: "footer-link" do %>
+      <i class="fas fa-search"></i> 検索
+    <% end %>
+    
+    <%= link_to summary_diary_entries_path, class: "footer-link" do %>
+      <i class="fas fa-chart-pie"></i> 要約
+    <% end %>
+    
+    <%= link_to graph_diary_entries_path, class: "footer-link" do %>
+      <i class="fas fa-chart-line"></i> グラフ
+    <% end %>
+    
+    <%= link_to happiness_definition_diary_entries_path, class: "footer-link" do %>
+      <i class="fas fa-smile"></i> 幸福度定義
+    <% end %>
+  </div>
+</footer>
+
+<style>
+  footer.mt-5 {
+    margin-top: 3rem !important;
+  }
+
+  footer .footer-link {
+    display: inline-block;
+    margin: 0 10px;
+    color: #007bff;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+
+  footer .footer-link:hover {
+    color: #0056b3;
+    transform: translateY(-2px);
+  }
+</style>

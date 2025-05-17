@@ -1,10 +1,12 @@
+
 class DiaryEntriesController < ApplicationController
+  before_action :authenticate_user!, except: [:trial]
   before_action :set_diary_entry, only: [:show, :edit, :update, :destroy]
   
   # トップページ（今日の日記）
   def index
     @today = Date.today
-    @diary_entry = DiaryEntry.find_by(date: @today) || DiaryEntry.new(date: @today)
+    @diary_entries = current_user.diary_entries.order(date: :desc).limit(10)
   end
   
   # 新規作成フォーム
@@ -23,6 +25,7 @@ class DiaryEntriesController < ApplicationController
   # 新規作成処理
   def create
     @diary_entry = DiaryEntry.new(diary_entry_params)
+    @diary_entry.user = current_user
     
     if @diary_entry.save
       redirect_to @diary_entry, notice: '日記が保存されました。'
@@ -55,19 +58,22 @@ class DiaryEntriesController < ApplicationController
     @year = Date.today.year if @year <= 0
     
     @date = Date.new(@year, @month, 1)
-    @entries = DiaryEntry.where(date: @date.beginning_of_month..@date.end_of_month)
-                        .pluck(:date)
-                        .map { |date| date.day }
+    @entries = current_user.diary_entries.where(date: @date.beginning_of_month..@date.end_of_month)
+                     .pluck(:date)
+                     .map { |date| date.day }
+                     
+    # 連続記録（ストリーク）の計算
+    @streak = calculate_streak(current_user.diary_entries)
   end
   
   # 検索機能
   def search
     @keyword = params[:keyword]
     @diary_entries = if @keyword.present?
-                       DiaryEntry.search(@keyword).order(date: :desc)
-                     else
-                       DiaryEntry.none
-                     end
+                      current_user.diary_entries.search(@keyword).order(date: :desc)
+                    else
+                      DiaryEntry.none
+                    end
   end
   
   # 月次サマリー
@@ -78,7 +84,7 @@ class DiaryEntriesController < ApplicationController
     @year = Date.today.year if @year <= 0
     @month = Date.today.month if @month <= 0
     
-    @summary = DiaryEntry.monthly_summary(@year, @month)
+    @summary = current_user.diary_entries.monthly_summary(@year, @month)
   end
   
   # グラフ表示
@@ -96,33 +102,32 @@ class DiaryEntriesController < ApplicationController
       @start_date = 1.month.ago.to_date
     end
     
-    @chart_data = DiaryEntry.happiness_chart_data(@start_date, Date.today)
+    @chart_data = current_user.diary_entries.happiness_chart_data(@start_date, Date.today)
   end
   
   # 幸福度定義ページ
   def happiness_definition
   end
   
+  # お試し機能（ログインなしで使用可能）
+  def trial
+    @diary_entry = DiaryEntry.new(date: Date.today)
+    render :new
+  end
+  
   private
   
   def set_diary_entry
-    @diary_entry = DiaryEntry.find(params[:id])
+    @diary_entry = current_user.diary_entries.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to diary_entries_path, alert: '指定された日記は存在しないか、アクセス権限がありません。'
   end
-
-  def calendar
-    diaries = current_user.diaries.where(date: Date.today.beginning_of_month..Date.today.end_of_month)
-    @diary_dates = diaries.pluck(:date)
-
-    @streak = calculate_streak(current_user.diaries)
-  end
-
-  private
-
-  def calculate_streak(diaries)
-    dates = diaries.order(date: :desc).pluck(:date)
+  
+  def calculate_streak(diary_entries)
+    dates = diary_entries.order(date: :desc).pluck(:date)
     streak = 0
     today = Date.today
-
+    
     dates.each do |date|
       if date == today - streak
         streak += 1
@@ -130,7 +135,7 @@ class DiaryEntriesController < ApplicationController
         break
       end
     end
-
+    
     streak
   end
   

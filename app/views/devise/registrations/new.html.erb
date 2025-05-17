@@ -1,19 +1,33 @@
 <h2>新規登録</h2>
-<% if flash[:notice] %>
-<%= flash[:notice] %> 
-<% end %> <% if flash[:alert] %>
-<%= flash[:alert] %> 
-<% end %> <% if resource.errors.any? %>
-<%= pluralize(resource.errors.count, "つのエラー") %>があります
-<% resource.errors.full_messages.each do |message| %>
-<%= message %>
+
+<% if resource.errors.any? %>
+  <div class="alert alert-danger">
+    <%= pluralize(resource.errors.count, "つのエラー") %>があります
+    <ul>
+      <% resource.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
 <% end %>
-<% end %>
+
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-<%= f.label :email, "メールアドレス", class: "form-label fw-bold" %> <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "example@mail.com" %>
-<%= f.label :username, "ユーザー名", class: "form-label fw-bold" %> <%= f.text_field :username, class: "form-control", placeholder: "ユーザー名を入力" %>
-<%= f.label :password, "パスワード", class: "form-label fw-bold" %> <% if @minimum_password_length %> （<%= @minimum_password_length %> 文字以上） <% end %> <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
-<%= f.label :password_confirmation, "パスワード（確認）", class: "form-label fw-bold" %> <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
-<%= f.submit "アカウント登録", class: "btn btn-primary btn-lg" %>
+  <%= f.label :email, "メールアドレス", class: "form-label fw-bold" %>
+  <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "example@mail.com" %>
+
+  <%= f.label :username, "ユーザー名", class: "form-label fw-bold" %>
+  <%= f.text_field :username, class: "form-control", placeholder: "ユーザー名を入力" %>
+
+  <%= f.label :password, "パスワード", class: "form-label fw-bold" %>
+  <% if @minimum_password_length %>
+    （<%= @minimum_password_length %> 文字以上）
+  <% end %>
+  <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
+
+  <%= f.label :password_confirmation, "パスワード（確認）", class: "form-label fw-bold" %>
+  <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
+
+  <%= f.submit "アカウント登録", class: "btn btn-primary btn-lg" %>
 <% end %>
-すでにアカウントをお持ちですか？ <%= link_to "ログイン", new_session_path(resource_name) %>
+
+<p>すでにアカウントをお持ちですか？ <%= link_to "ログイン", new_session_path(resource_name) %></p>
