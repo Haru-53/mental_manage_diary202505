@@ -46,7 +46,7 @@
     <% end %>
   </div>
 <% else %>
-  <%= link_to "+", new_diary_entry_path(date: day), class: "add-entry-link" if day.month == @date.month %>
+  <%= link_to "📄", new_diary_entry_path(date: day), class: "add-entry-link" if day.month == @date.month %>
 <% end %>
             </td>
           <% end %>
