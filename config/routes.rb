@@ -52,7 +52,7 @@ end
   # 日記（カレンダー含む）
   resources :diary_entries do
     collection do
-      get :calendar
+      get "diary_entries/calendar"
     end
   end
 
