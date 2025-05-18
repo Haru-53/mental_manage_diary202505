@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>mental_manage_diaryメンタル管理日記</title>
+    <title>3good things メンタル管理日記</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -169,12 +169,12 @@
                 <li><%= link_to "📝 日記を書く", new_diary_entry_path %></li>
                 <li><%= link_to "📅 カレンダー", calendar_diary_entries_path %></li>
                 <li><%= link_to "📈 グラフ", graph_diary_entries_path %></li>
-                <li><%= link_to "💓 幸福度定義", happiness_definition_diary_entries_path %></li>
+                <li><%= link_to "💓 幸福度記録", happiness_definition_diary_entries_path %></li>
                 <li><%= link_to "📋 日記要約", summary_diary_entries_path %></li>
                 <li><%= link_to "🔍 日記検索", search_diary_entries_path %></li>
                 <li><%= link_to "📤 SNS共有", "#" %></li>
                 <li><%= link_to "⚙️ 設定", "#" %></li>
-                <li><%= link_to "🎷 お知らせ", announcements_path %></li>
+                <li><%= link_to "🎷 お知らせ・更新情報", announcements_path %></li>
                 <li><%= link_to "📩 お問合せ・要望", contact_path %></li>
               </ul>
             </div>
@@ -204,7 +204,7 @@
       <div class="footer-container">
         <div class="footer-links mb-2">
           <%= link_to "📩 お問い合わせ・ご要望", contact_path, class: "footer-link" %>
-          <%= link_to "🎷 お知らせ", announcements_path, class: "footer-link" %>
+          <%= link_to "🎷 お知らせ・更新情報", announcements_path, class: "footer-link" %>
         </div>
         <div class="footer-info">
           <p>最終更新日: <%= Date.today.strftime('%Y年%m月%d日') %></p>

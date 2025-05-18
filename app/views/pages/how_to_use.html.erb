@@ -1,0 +1,63 @@
+<div class="container mt-4">
+  <h1>アプリの使い方※準備中</h1>
+  
+  <div class="card mt-4">
+    <div class="card-body">
+      <h2 class="card-title">基本操作</h2>
+      <p class="card-text">
+        このアプリケーションでは、以下の基本操作が可能です。
+      </p>
+      
+      <div class="mt-4">
+        <h3>1. 機能1の使い方</h3>
+        <p>機能1の説明をここに記載します。具体的な操作手順や注意点などを詳しく説明します。</p>
+        
+        <h3>2. 機能2の使い方</h3>
+        <p>機能2の説明をここに記載します。スクリーンショットや図解があるとより分かりやすくなります。</p>
+        
+        <h3>3. 設定変更について</h3>
+        <p>各種設定の変更方法や、カスタマイズ可能な項目について説明します。</p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="card mt-4">
+    <div class="card-body">
+      <h2 class="card-title">よくある質問</h2>
+      
+      <div class="accordion mt-3" id="faqAccordion">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="faqHeading1">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse1" aria-expanded="false" aria-controls="faqCollapse1">
+              質問1: アカウント情報を変更するにはどうすればよいですか？
+            </button>
+          </h2>
+          <div id="faqCollapse1" class="accordion-collapse collapse" aria-labelledby="faqHeading1" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              アカウント情報の変更方法について詳しく説明します。
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="faqHeading2">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse2" aria-expanded="false" aria-controls="faqCollapse2">
+              質問2: データのエクスポート方法を教えてください
+            </button>
+          </h2>
+          <div id="faqCollapse2" class="accordion-collapse collapse" aria-labelledby="faqHeading2" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              データのエクスポート機能の使い方について説明します。
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="text-center mt-4 mb-5">
+    <p>その他ご不明な点がございましたら、お問い合わせフォームよりご連絡ください。</p>
+    <!-- お問い合わせページへのリンク -->
+    <%= link_to "お問い合わせ", "#", class: "btn btn-primary" %>
+  </div>
+</div>

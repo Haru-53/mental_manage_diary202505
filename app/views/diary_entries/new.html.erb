@@ -1,11 +1,16 @@
 <!-- app/views/diary_entries/new.html.erb -->
 <div class="diary-form-container">
+<% if flash[:notice] %>
+  <div class="alert alert-success text-center"><%= flash[:notice] %></div>
+<% elsif flash[:alert] %>
+  <div class="alert alert-danger text-center"><%= flash[:alert] %></div>
+<% end %>
   <div class="diary-header">
     <h1 class="text-center mb-4">今日はどんな日でしたか？</h1>
     
     <div class="date-display text-center mb-4">
       <span class="current-date">
-        <%= Date.today.strftime('%Y年%m月%d日') %> (<%= I18n.t('date.abbr_day_names')[Date.today.wday] %>)
+        <%= Date.today.strftime('%Y年%m月%d日') %> 
       </span>
     </div>
   </div>

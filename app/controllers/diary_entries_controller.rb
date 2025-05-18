@@ -23,16 +23,16 @@ class DiaryEntriesController < ApplicationController
   end
   
   # 新規作成処理
-  def create
-    @diary_entry = DiaryEntry.new(diary_entry_params)
-    @diary_entry.user = current_user
-    
-    if @diary_entry.save
-      redirect_to @diary_entry, notice: '日記が保存されました。'
-    else
-      render :new, status: :unprocessable_entity
-    end
+def create
+  @diary_entry = DiaryEntry.new(diary_entry_params)
+  if @diary_entry.save
+    flash[:notice] = "日記を保存しました！"
+    redirect_to new_diary_entry_path
+  else
+    flash.now[:alert] = "保存に失敗しました。内容を確認してください。"
+    render :new
   end
+end
   
   # 更新処理
   def update
@@ -105,7 +105,7 @@ class DiaryEntriesController < ApplicationController
     @chart_data = current_user.diary_entries.happiness_chart_data(@start_date, Date.today)
   end
   
-  # 幸福度定義ページ
+  # 幸福度記録
   def happiness_definition
   end
   
@@ -114,6 +114,21 @@ class DiaryEntriesController < ApplicationController
     @diary_entry = DiaryEntry.new(date: Date.today)
     render :new
   end
+
+  def diary_entry_params
+  params.require(:diary_entry).permit(
+    :date,
+    :reflection,
+    :notes,
+    :happiness_level
+  ).merge(
+    good_things_array: [
+      params[:diary_entry]["good_things_array[0]"],
+      params[:diary_entry]["good_things_array[1]"],
+      params[:diary_entry]["good_things_array[2]"]
+    ]
+  )
+end
   
   private
   
