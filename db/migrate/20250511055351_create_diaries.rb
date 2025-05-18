@@ -8,6 +8,6 @@ class CreateDiaries < ActiveRecord::Migration[7.2]
       t.timestamps
     end
 
-  remove_index :diary_entries, :date
+ # remove_index :diary_entries, :date
   end
 end
