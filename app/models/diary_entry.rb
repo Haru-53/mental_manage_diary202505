@@ -3,6 +3,9 @@ class DiaryEntry < ApplicationRecord
 
   validates :date, presence: true
 
+  # 日記が複数登録されないようにするバリデーション
+  validates :date, uniqueness: { scope: :user_id, message: "はすでに登録されています" }
+
   # 幸福度は1〜10の整数、空でもOK
   validates :happiness_level, numericality: { 
     only_integer: true, 

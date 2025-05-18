@@ -5,7 +5,7 @@ document.addEventListener('turbo:load', function() {
   initializeMenu();
 });
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('turbo:load', function() {
   initializeMenu();
 });
 

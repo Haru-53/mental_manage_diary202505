@@ -13,40 +13,51 @@ class DiaryEntriesController < ApplicationController
 
   # 新規作成フォーム
   def new
-    @diary_entry = DiaryEntry.new(date: params[:date] || Date.today)
-  end
-
-  # 編集フォーム
-  def edit; end
-
-  # 新規作成処理
-  def create
-    @diary_entry = DiaryEntry.new(diary_entry_params)
-
-    if @diary_entry.save
-      flash[:notice] = "日記を保存しました！"
-      redirect_to new_diary_entry_path
+    if params[:id]
+      @diary_entry = DiaryEntry.find(params[:id])
     else
-      flash.now[:alert] = "保存に失敗しました。内容を確認してください。"
-      render :new
+      @diary_entry = DiaryEntry.new(date: params[:date])
     end
   end
 
-  # 更新処理
-def update
-  if @diary_entry.update(diary_entry_params)
-    flash[:notice] = '日記が更新されました。'
+  # 編集フォーム（new.html.erbを再利用）
+  def edit
+    @diary_entry = DiaryEntry.find(params[:id])
+    render :new
+  end
 
-    # カレンダー画面にリダイレクト。更新された日記の月と年を使う
-    redirect_to calendar_diary_entries_path(
-      year: @diary_entry.date.year,
-      month: @diary_entry.date.month
-    )
+  # 新規作成処理
+def create
+  # 既に同じ日付のエントリーがあるか確認
+  existing_entry = DiaryEntry.find_by(date: diary_entry_params[:date], user_id: current_user.id)
+
+  if existing_entry
+    # すでにある場合は更新（例：good_things_arrayなども対応するなら更新処理を追加）
+    flash[:alert] = "この日の日記はすでに存在します。編集してください。"
+    redirect_to edit_diary_entry_path(existing_entry)
   else
-    flash.now[:alert] = "更新に失敗しました。"
-    render :edit, status: :unprocessable_entity
+    @diary_entry = current_user.diary_entries.new(diary_entry_params)
+    if @diary_entry.save
+      flash[:notice] = "日記を保存しました"
+      redirect_to calendar_diary_entries_path
+    else
+      render :new
+    end
   end
 end
+
+  # 更新処理
+  def update
+    @diary_entry = current_user.diary_entries.find(params[:id])
+
+    if @diary_entry.update(diary_entry_params)
+      flash[:notice] = "日記を保存しました！"
+      redirect_to calendar_diary_entries_path
+    else
+      flash.now[:alert] = "更新に失敗しました。"
+      render :edit
+    end
+  end
 
   # 削除処理
   def destroy
@@ -63,9 +74,9 @@ end
     @year = Date.today.year if @year <= 0
 
     @date = Date.new(@year, @month, 1)
-    @entries = current_user.diary_entries.where(date: @date.beginning_of_month..@date.end_of_month)
-                                         .pluck(:date).map(&:day)
 
+    @diary_entries = current_user.diary_entries.where(date: @date.beginning_of_month..@date.end_of_month)
+    @entries = @diary_entries.pluck(:date).map(&:day)
     @streak = calculate_streak(current_user.diary_entries)
   end
 
@@ -101,7 +112,7 @@ end
     @chart_data = current_user.diary_entries.happiness_chart_data(@start_date, Date.today)
   end
 
-  # 幸福度定義（幸福度記録ページにリダイレクト）
+  # 幸福度定義ページへリダイレクト
   def happiness_definition
     redirect_to happiness_items_path
   end
@@ -122,16 +133,8 @@ end
 
   def diary_entry_params
     params.require(:diary_entry).permit(
-      :date,
-      :reflection,
-      :notes,
-      :happiness_level
-    ).merge(
-      good_things_array: [
-        params[:diary_entry]["good_things_array[0]"],
-        params[:diary_entry]["good_things_array[1]"],
-        params[:diary_entry]["good_things_array[2]"]
-      ]
+      :date, :reflection, :notes, :happiness_level,
+      good_things_array: []  # 配列として許可
     )
   end
 
@@ -141,11 +144,8 @@ end
     today = Date.today
 
     dates.each do |date|
-      if date == today - streak
-        streak += 1
-      else
-        break
-      end
+      break if date != today - streak
+      streak += 1
     end
 
     streak

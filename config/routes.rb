@@ -6,9 +6,9 @@ Rails.application.routes.draw do
   }
 
   # ログイン後のリダイレクト先
-authenticated :user do
-  root 'diary_entries#index', as: :authenticated_root
-end
+  authenticated :user do
+    root 'diary_entries#index', as: :authenticated_root
+  end
 
   # 未認証ユーザーのルート
   unauthenticated do
@@ -38,21 +38,17 @@ end
       get 'summary'
       get 'graph'
       get 'happiness_definition'
+      get 'diary/search', to: 'diary_features#search', as: 'diary_search'
+      get 'diary/happiness', to: 'diary_features#happiness', as: 'diary_happiness'
+      get 'diary/summary', to: 'diary_features#summary', as: 'diary_summary'
     end
   end
 
-  #幸福度定義ページ
+  # 幸福度定義ページ
   resources :happiness_items, only: [:index] do
     collection do
       patch :update_all
       patch :update_score
-    end
-  end
-
-  # 日記（カレンダー含む）
-  resources :diary_entries do
-    collection do
-      get "diary_entries/calendar"
     end
   end
 

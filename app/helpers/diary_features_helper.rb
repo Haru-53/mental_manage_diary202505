@@ -1,0 +1,2 @@
+module DiaryFeaturesHelper
+end

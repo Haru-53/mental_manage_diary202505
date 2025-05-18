@@ -1,5 +1,5 @@
 <div class="container mt-4">
-  <h1>カレンダー</h1>
+  <h1>月間カレンダー</h1>
 
   <div class="d-flex justify-content-between align-items-center mb-4">
     <%= link_to "前月", calendar_diary_entries_path(date: @date.prev_month), class: "btn btn-outline-secondary" %>
@@ -7,12 +7,15 @@
     <%= link_to "次月", calendar_diary_entries_path(date: @date.next_month), class: "btn btn-outline-secondary" %>
   </div>
 
-  <div class="mb-3">
-    <%= link_to "日記一覧", diary_entries_path, class: "btn btn-primary" %>
-    <%= link_to "新規作成", new_diary_entry_path, class: "btn btn-success" %>
-    <%= link_to "幸福度定義", happiness_items_path, class: "btn btn-info" %>
-  </div>
-
+  <%# 日付セルのクラス割り当て部分の例 %>
+<% highlight_class = '' %>
+<% if params[:date].present? %>
+  <% begin %>
+    <% highlight_class = 'highlight-date' if day == Date.parse(params[:date]) %>
+  <% rescue ArgumentError %>
+    <%# 無効な日付文字列なら無視 %>
+  <% end %>
+<% end %>
   <table class="table table-bordered calendar-table">
     <thead>
       <tr>
@@ -28,30 +31,23 @@
           <% week.each do |day| %>
             <% 
               diary_entry = @diary_entries.find { |entry| entry.date.to_date == day }
-              today_class = day == Date.today ? 'today' : ''
-              month_class = day.month == @date.month ? 'current-month' : 'other-month'
-              happiness_class = diary_entry ? "happiness-#{diary_entry.happiness_score || 0}" : ''
-              
-              # 編集した日付をハイライト
-              highlight_class = ''
-              if params[:date] && day.to_s == params[:date].to_date.to_s
-                highlight_class = 'highlight-date'
-              end
+              today_class = (day == Date.today) ? 'today' : ''
+              month_class = (day.month == @date.month) ? 'current-month' : 'other-month'
+              happiness_class = diary_entry ? "happiness-#{diary_entry.happiness_level || 0}" : ''
+              highlight_class = (params[:date] && day.to_s == params[:date].to_date.to_s) ? 'highlight-date' : ''
             %>
             <td class="<%= [today_class, month_class, happiness_class, highlight_class].join(' ') %>">
               <div class="date-number"><%= day.day %></div>
-              
-              <% if diary_entry %>
-                <div class="diary-indicator">
-                  <%= link_to diary_entry_path(diary_entry) do %>
-                    <i class="fas fa-check"></i>
-                    <span class="happiness-dot" style="background-color: <%= happiness_dot_color(diary_entry.happiness_score) %>;"></span>
-                    <small><%= truncate(diary_entry.title, length: 10) %></small>
-                  <% end %>
-                </div>
-              <% else %>
-                <%= link_to "+", new_diary_entry_path(diary_entry: { date: day }), class: "add-entry-link" if day.month == @date.month %>
-              <% end %>
+
+ <% if diary_entry %>
+  <div class="diary-indicator">
+    <%= link_to edit_diary_entry_path(diary_entry), class: "diary-check-link" do %>
+      <i class="fas fa-check"></i>
+    <% end %>
+  </div>
+<% else %>
+  <%= link_to "+", new_diary_entry_path(date: day), class: "add-entry-link" if day.month == @date.month %>
+<% end %>
             </td>
           <% end %>
         </tr>
@@ -68,26 +64,41 @@
     padding: 5px;
     position: relative;
   }
-  
+
   .today {
     background-color: #f8f9fa;
     border: 2px solid #007bff !important;
   }
-  
+
   .other-month {
     background-color: #f0f0f0;
     color: #999;
   }
-  
+
   .date-number {
     font-weight: bold;
     margin-bottom: 5px;
   }
-  
+
   .diary-indicator {
     margin-top: 5px;
   }
-  
+
+  /* チェックアイコンを大きく、オレンジピンク色に */
+  .diary-check-link {
+    display: inline-flex;
+    align-items: center;
+    font-size: 50px;
+    padding: 5px 8px;
+    color: #FF6F61; /* オレンジピンク */
+    text-decoration: none;
+  }
+
+  .diary-check-link:hover {
+    color: #e65b50; /* 少し濃いめのホバー色 */
+    cursor: pointer;
+  }
+
   .add-entry-link {
     position: absolute;
     bottom: 5px;
@@ -96,20 +107,12 @@
     font-size: 16px;
   }
 
-  .happiness-dot {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    margin-right: 3px;
-  }
-  
   /* 編集した日付のハイライト */
   .highlight-date {
     animation: pulse 2s infinite;
     box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
   }
-  
+
   @keyframes pulse {
     0% {
       box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7);
@@ -122,3 +125,4 @@
     }
   }
 </style>
+

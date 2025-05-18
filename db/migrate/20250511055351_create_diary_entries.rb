@@ -8,6 +8,7 @@ class CreateDiaries < ActiveRecord::Migration[7.2]
       t.timestamps
     end
 
-    add_index :diaries, [:user_id, :date], unique: true
+  add_index :diary_entries, [:user_id, :date], unique: true
+  remove_index :diary_entries, :date
   end
 end

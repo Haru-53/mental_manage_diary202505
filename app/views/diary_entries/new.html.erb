@@ -1,16 +1,15 @@
-<!-- app/views/diary_entries/new.html.erb -->
 <div class="diary-form-container">
-<% if flash[:notice] %>
-  <div class="alert alert-success text-center"><%= flash[:notice] %></div>
-<% elsif flash[:alert] %>
-  <div class="alert alert-danger text-center"><%= flash[:alert] %></div>
-<% end %>
+  <% if flash[:notice] %>
+    <div class="alert alert-success text-center"><%= flash[:notice] %></div>
+  <% elsif flash[:alert] %>
+    <div class="alert alert-danger text-center"><%= flash[:alert] %></div>
+  <% end %>
+
   <div class="diary-header">
     <h1 class="text-center mb-4">今日はどんな日でしたか？</h1>
-    
-    <div class="date-display text-center mb-4">
-      <span class="current-date">
-        <%= Date.today.strftime('%Y年%m月%d日') %> 
+<div class="date-display text-center mb-4">
+  <span class="current-date">
+    <%= (@diary_entry.date || Date.today).strftime('%Y年%m月%d日') %>
       </span>
     </div>
   </div>
@@ -26,8 +25,7 @@
         </ul>
       </div>
     <% end %>
-
-    <%= form.hidden_field :date, value: Date.today %>
+    <%= form.date_field :date, value: (@diary_entry.date || Date.today), class: "form-control" %>
 
     <div class="card mb-4 shadow-sm">
       <div class="card-header bg-success text-white">
@@ -39,7 +37,7 @@
             <div class="mb-3 good-thing-item">
               <div class="input-group">
                 <span class="input-group-text"><i class="fas fa-star"></i></span>
-                <%= form.text_field "good_things_array[#{i}]", class: "form-control", placeholder: "good thing#{i+1}" %>
+                <%= text_field_tag 'diary_entry[good_things_array][]', '', class: "form-control", placeholder: "good thing#{i + 1}" %>
               </div>
             </div>
           <% end %>
@@ -77,10 +75,10 @@
               <small>5 (中)</small>
               <small>10 (高)</small>
             </div>
-            <%= form.range_field :happiness_level, min: 1, max: 10, class: "form-range", value: 5 %>
+           <%= form.range_field :happiness_level, min: 1, max: 10, class: "form-range", value: @diary_entry.happiness_level || 5 %>
           </div>
           <div class="text-center mt-2">
-            <div id="happiness-value">5</div>
+            <div id="happiness-value"><%= @diary_entry.happiness_level || 5 %></div>
           </div>
         </div>
       </div>
@@ -90,7 +88,7 @@
       <%= form.submit "日記を保存する", class: "btn btn-primary btn-lg px-5" %>
     </div>
   <% end %>
-  <%= render 'shared/diary_nav_footer' %>
+
 </div>
 
 <style>
@@ -103,7 +101,7 @@
     max-width: 800px;
     margin: 0 auto;
   }
-  
+
   .date-display {
     font-size: 1.5rem;
     font-weight: bold;
@@ -113,7 +111,7 @@
     border-radius: 8px;
     display: inline-block;
   }
-  
+
   .card-header {
     background-color: var(--main-blue) !important;
     color: #fff;
@@ -122,24 +120,24 @@
   .card-header h3 {
     font-size: 1.25rem;
   }
-  
+
   .happiness-level-container {
     padding: 10px 20px;
   }
-  
+
   #happiness-value {
     font-size: 2rem;
     font-weight: bold;
     color: var(--main-blue);
   }
-  
+
   .form-actions .btn {
     background-color: var(--accent-pink-orange);
     border-color: var(--accent-pink-orange);
     color: #fff;
     transition: all 0.3s;
   }
-  
+
   .form-actions .btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -147,18 +145,33 @@
     border-color: #e85b5b;
   }
 </style>
+
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     const happinessRange = document.querySelector('input[name="diary_entry[happiness_level]"]');
     const happinessValue = document.getElementById('happiness-value');
-    
+
+    const dateField = document.querySelector('input[name="diary_entry[date]"]');
+    const currentDateDisplay = document.querySelector('.current-date');
+
+    // 幸福度スライダーの値表示
     if (happinessRange && happinessValue) {
-      // 初期値を表示
       happinessValue.textContent = happinessRange.value;
-      
-      // スライダーの値が変わったときに表示を更新
       happinessRange.addEventListener('input', function() {
         happinessValue.textContent = this.value;
+      });
+    }
+
+    // カレンダー日付が変わったら表示も更新
+    if (dateField && currentDateDisplay) {
+      dateField.addEventListener('input', function() {
+        const selectedDate = new Date(this.value);
+        if (!isNaN(selectedDate)) {
+          const formattedDate = selectedDate.getFullYear() + '年' +
+                                String(selectedDate.getMonth() + 1).padStart(2, '0') + '月' +
+                                String(selectedDate.getDate()).padStart(2, '0') + '日';
+          currentDateDisplay.textContent = formattedDate;
+        }
       });
     }
   });
