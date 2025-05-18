@@ -20,6 +20,7 @@ end
   get 'announcements', to: 'pages#announcements', as: 'announcements'
   get 'how_to_use', to: 'pages#how_to_use'
   get 'trial', to: 'pages#trial'
+  get 'try_app', to: 'pages#try_app', as: 'try_app'
 
   # 投稿とコメント
   resources :posts do

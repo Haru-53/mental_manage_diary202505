@@ -9,4 +9,9 @@ class PagesController < ApplicationController
   def how_to_use
     # 特別なロジックが必要なければ空でOK
   end
+
+    def trial
+    # デモ機能のための特別なロジックがあれば記述
+    # 例: サンプルデータの読み込みなど
+  end
 end
