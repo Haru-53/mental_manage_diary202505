@@ -147,32 +147,37 @@
 </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const happinessRange = document.querySelector('input[name="diary_entry[happiness_level]"]');
-    const happinessValue = document.getElementById('happiness-value');
+document.addEventListener('DOMContentLoaded', function() {
+  // 正しいセレクタを使用する
+  const happinessRange = document.querySelector('input[name="diary_entry[happiness_level]"]');
+  const happinessValue = document.getElementById('happiness-value');
 
-    const dateField = document.querySelector('input[name="diary_entry[date]"]');
-    const currentDateDisplay = document.querySelector('.current-date');
+  // 日付フィールドと表示要素の正しいセレクタ
+  const dateField = document.querySelector('input[type="date"]');
+  const currentDateDisplay = document.querySelector('.current-date');
 
-    // 幸福度スライダーの値表示
-    if (happinessRange && happinessValue) {
-      happinessValue.textContent = happinessRange.value;
-      happinessRange.addEventListener('input', function() {
-        happinessValue.textContent = this.value;
-      });
-    }
+  // 幸福度スライダーの値表示
+  if (happinessRange && happinessValue) {
+    // 初期値を設定
+    happinessValue.textContent = happinessRange.value;
+    
+    // イベントリスナーの設定
+    happinessRange.addEventListener('input', function() {
+      happinessValue.textContent = this.value;
+    });
+  }
 
-    // カレンダー日付が変わったら表示も更新
-    if (dateField && currentDateDisplay) {
-      dateField.addEventListener('input', function() {
-        const selectedDate = new Date(this.value);
-        if (!isNaN(selectedDate)) {
-          const formattedDate = selectedDate.getFullYear() + '年' +
-                                String(selectedDate.getMonth() + 1).padStart(2, '0') + '月' +
-                                String(selectedDate.getDate()).padStart(2, '0') + '日';
-          currentDateDisplay.textContent = formattedDate;
-        }
-      });
-    }
-  });
+  // カレンダー日付が変わったら表示も更新
+  if (dateField && currentDateDisplay) {
+    dateField.addEventListener('change', function() {
+      const selectedDate = new Date(this.value);
+      if (!isNaN(selectedDate)) {
+        const formattedDate = selectedDate.getFullYear() + '年' +
+                             (selectedDate.getMonth() + 1) + '月' +
+                             selectedDate.getDate() + '日';
+        currentDateDisplay.textContent = formattedDate;
+      }
+    });
+  }
+});
 </script>
