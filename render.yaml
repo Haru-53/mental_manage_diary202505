@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: mental_manage_diary202505
+    env: ruby
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "bundle exec rails server"
+    postDeployCommand: "bundle exec rails db:migrate"

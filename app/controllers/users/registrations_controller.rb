@@ -23,6 +23,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
       set_minimum_password_length
       respond_with resource
     end
+
+     super do |resource|
+      # ここでflashメッセージをクリアすると、Deviseのデフォルトメッセージが表示されなくなる
+      # ただしこの場合は、カスタムメッセージを設定する必要がある
+  
+      flash[:notice] = "ログインしました。"
+    end
+
   end
   
   protected
