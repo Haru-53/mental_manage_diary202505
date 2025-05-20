@@ -3,34 +3,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
   before_action :configure_account_update_params, only: [:update]
   
-  # createアクションを完全に書き換え
+  # createアクションを修正
   def create
-    build_resource(sign_up_params)
-    
-    # 保存処理
-    resource.save
-    
-    # 保存の成否によって処理を分岐
-    if resource.persisted?
-      # フラッシュメッセージを設定
-      set_flash_message! :notice, :signed_up
-      
-      # ログインせずにログインページへリダイレクト
-      respond_with resource, location: after_sign_up_path_for(resource)
-    else
-      # 登録失敗時の処理
-      clean_up_passwords resource
-      set_minimum_password_length
-      respond_with resource
+    super do |resource|
+      # 登録成功時の処理だけここに書く
+      if resource.persisted?
+        flash[:notice] = "アカウント登録が完了しました。ログインしてください。"
+      end
     end
-
-     super do |resource|
-      # ここでflashメッセージをクリアすると、Deviseのデフォルトメッセージが表示されなくなる
-      # ただしこの場合は、カスタムメッセージを設定する必要がある
-  
-      flash[:notice] = "ログインしました。"
-    end
-
   end
   
   protected
