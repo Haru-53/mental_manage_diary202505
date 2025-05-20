@@ -1,27 +1,29 @@
 Rails.application.routes.draw do
-  # Deviseの認証関連ルーティング（1回のみ定義）
+  # Deviseの認証関連ルーティング
   devise_for :users, controllers: {
     registrations: 'users/registrations',
-    sessions: 'users/sessions'
+    sessions: 'users/sessions',
+    omniauth_callbacks: 'users/omniauth_callbacks'
   }
 
-  # ログイン後のリダイレクト先
+  # ログイン済みユーザーのルート
   authenticated :user do
     root 'diaries#index', as: :authenticated_root
   end
 
+  # 未ログインユーザーのルート
+  unauthenticated do
+    root 'posts#index'
+  end
 
-  # 未認証ユーザーのルートパス
-  root 'posts#index'
-
-  # ページ関連のルート
+  # ページ関連
   get "pages/contact"
   get 'contact', to: 'pages#contact', as: 'contact'
   get 'announcements', to: 'pages#announcements', as: 'announcements'
   get "how_to_use", to: "pages#how_to_use"
   get "trial", to: "pages#trial"
 
-  # 投稿関連のルート
+  # 投稿
   resources :posts do
     resources :comments, only: [:create, :destroy]
     collection do
@@ -29,8 +31,8 @@ Rails.application.routes.draw do
     end
   end
 
-  # 日記エントリー関連のルート
-  resources :diary_entries do
+  # 日記エントリー
+  resources :diary_entries, path: 'entries' do
     collection do
       get 'calendar'
       get 'search'
@@ -40,16 +42,16 @@ Rails.application.routes.draw do
     end
   end
 
-  # 日記関連のルート
+  # 日記
   resources :diaries
 
-  # タグ関連のルート
+  # タグ
   resources :tags, only: [:index, :show]
 
-  # プロフィール関連のルート
+  # プロフィール
   resources :profiles, only: [:show, :edit, :update]
 
-  # Rails ヘルスチェックとPWA関連
+  # PWA関連
   get "up" => "rails/health#show", as: :rails_health_check
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
