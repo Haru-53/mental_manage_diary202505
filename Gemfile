@@ -24,7 +24,7 @@ gem "bootsnap", require: false
 gem "sassc-rails"
 # TailwindCSS support (移動しました: テスト以外でも使う可能性が高いので)
 gem 'tailwindcss-rails'
-gem "tailwindcss-ruby", "3.4.17"
+gem "tailwindcss-ruby", "4.1.7"
 
 # SNSログイン機能
 gem "devise"                         # ログイン、ログアウト、新規登録
