@@ -1,16 +1,17 @@
 Rails.application.routes.draw do
-  # Devise 認証関連（1回のみ定義）
+  # Devise 認証関連
   devise_for :users, controllers: {
     registrations: 'users/registrations',
-    sessions: 'users/sessions'
+    sessions: 'users/sessions',
+    omniauth_callbacks: 'users/omniauth_callbacks'
   }
 
-  # ログイン後のリダイレクト先
+  # ログイン済みユーザーのルート
   authenticated :user do
     root 'diary_entries#index', as: :authenticated_root
   end
 
-  # 未認証ユーザーのルート
+  # 未ログインユーザーのルート
   unauthenticated do
     root 'posts#index'
   end
@@ -31,7 +32,7 @@ Rails.application.routes.draw do
   end
 
   # 日記エントリー関連
-  resources :diary_entries do
+  resources :diary_entries, path: 'entries' do
     collection do
       get 'calendar'
       get 'search'
@@ -51,12 +52,6 @@ Rails.application.routes.draw do
       patch :update_score
     end
   end
-
-  # タグ
-  resources :tags, only: [:index, :show]
-
-  # プロフィール
-  resources :profiles, only: [:show, :edit, :update]
 
   # Railsヘルスチェック / PWA関連
   get "up" => "rails/health#show", as: :rails_health_check

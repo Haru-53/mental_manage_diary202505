@@ -2,68 +2,60 @@ source "https://rubygems.org"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.2.1"
-# The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
+# The original asset pipeline for Rails
 gem "sprockets-rails"
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
-# Use the Puma web server [https://github.com/puma/puma]
+# Use the Puma web server
 gem "puma", ">= 5.0"
-# Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
+# Bundle and transpile JavaScript
 gem "jsbundling-rails"
-# Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
+# Hotwire's SPA-like page accelerator
 gem "turbo-rails"
-# Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
+# Hotwire's modest JavaScript framework
 gem "stimulus-rails"
-# Build JSON APIs with ease [https://github.com/rails/jbuilder]
+# Build JSON APIs with ease
 gem "jbuilder"
-# Use Redis adapter to run Action Cable in production
-# gem "redis", ">= 4.0.1"
-
-# Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
-# gem "kredis"
-
-# Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
-# gem "bcrypt", "~> 3.1.7"
-
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+# Windows does not include zoneinfo files
 gem "tzinfo-data", platforms: %i[ windows jruby ]
-
-# Reduces boot times through caching; required in config/boot.rb
+# Reduces boot times through caching
 gem "bootsnap", require: false
-gem 'sassc-rails'
+# SassC for SCSS compilation
+gem "sassc-rails"
+# TailwindCSS support (移動しました: テスト以外でも使う可能性が高いので)
+gem 'tailwindcss-rails'
+gem "tailwindcss-ruby", "3.4.17"
 
-# Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-# gem "image_processing", "~> 1.2"
+# SNSログイン機能
+gem "devise"                         # ログイン、ログアウト、新規登録
+gem "devise-i18n"                   # devise の日本語化
+gem "omniauth"                      # OmniAuthの基本
+gem "omniauth-rails_csrf_protection" # CSRF対策
+gem "omniauth-google-oauth2"        # Google用
+gem "omniauth-facebook"             # Facebook用
+gem "omniauth-twitter"             # X(Twitter)用
+gem "omniauth-line"                 # LINE用
+gem "dotenv-rails"                  # 環境変数管理
+
+# Use importmap
+gem "importmap-rails"
 
 group :development, :test do
-  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+  # Debugging support
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
-
-  # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
+  # Static analysis for security vulnerabilities
   gem "brakeman", require: false
-
-  # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
+  # Omakase Ruby styling
   gem "rubocop-rails-omakase", require: false
 end
 
 group :development do
-  # Use console on exceptions pages [https://github.com/rails/web-console]
+  # Use console on exceptions pages
   gem "web-console"
 end
 
 group :test do
-  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
+  # Use system testing
   gem "capybara"
   gem "selenium-webdriver"
-  gem 'tailwindcss-rails'
-  gem "tailwindcss-ruby", "3.4.17"
 end
-#↓SNSログイン機能
-gem 'omniauth'
-gem 'omniauth-google-oauth2'
-gem 'omniauth-facebook'
-gem 'omniauth-rails_csrf_protection'
-gem 'devise' #ログイン、ログアウト、新規登録のgem
-gem 'importmap-rails'
-
-gem 'devise-i18n'
