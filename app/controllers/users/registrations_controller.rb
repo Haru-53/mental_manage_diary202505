@@ -1,56 +1,21 @@
-<<<<<<< HEAD
-=======
 # frozen_string_literal: true
 
->>>>>>> login_logout_registration
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
   before_action :configure_account_update_params, only: [:update]
-<<<<<<< HEAD
-  
-  # createアクションを修正
-  def create
-    super do |resource|
-      # 登録成功時の処理だけここに書く
-      if resource.persisted?
-        flash[:notice] = "アカウント登録が完了しました。ログインしてください。"
-      end
-    end
-  end
-  
-  protected
-  
-  # サインアップ時のパラメータ設定
-  def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:username])
-  end
-  
-  # アカウント更新時のパラメータ設定
-=======
 
-  # SNS経由の登録ユーザーがパスワード入力なしで更新できるようにする
-  def update_resource(resource, params)
-    if resource.respond_to?(:provider) && resource.provider.present?
-      params.delete(:current_password)
-      resource.update_without_password(params)
-    else
-      super
-    end
-  end
-
-  # アカウント作成（登録）
+  # サインアップ処理
   def create
     build_resource(sign_up_params)
 
     if resource.save
-      # 確認メールが必要な場合に即確認（任意）
+      # 確認メールが必要な場合に即時確認
       if resource.respond_to?(:confirmed_at) && resource.confirmation_required?
         resource.confirmed_at = Time.current
         resource.save
       end
 
-      # 登録成功メッセージ
-      set_flash_message! :notice, :signed_up
+      flash[:notice] = "アカウント登録が完了しました。ログインしてください。"
       respond_with resource, location: after_sign_up_path_for(resource)
     else
       clean_up_passwords resource
@@ -61,13 +26,22 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   protected
 
+  # SNS連携ユーザーはパスワードなしで更新可能
+  def update_resource(resource, params)
+    if resource.provider.present?
+      params.delete(:current_password)
+      resource.update_without_password(params)
+    else
+      super
+    end
+  end
+
   # サインアップ時の追加パラメータ許可
   def configure_sign_up_params
     devise_parameter_sanitizer.permit(:sign_up, keys: [:username])
   end
 
   # アカウント更新時の追加パラメータ許可
->>>>>>> login_logout_registration
   def configure_account_update_params
     devise_parameter_sanitizer.permit(:account_update, keys: [:username, :image])
   end
@@ -82,26 +56,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
     new_diary_entry_path
   end
 
-  # プロフィール更新後のリダイレクト先（日記一覧ページへ）
+  # アカウント更新後のリダイレクト先（日記一覧ページへ）
   def after_update_path_for(resource)
     diaries_path
   end
-<<<<<<< HEAD
-  
-  # 新規登録後のリダイレクト先
-  def after_sign_up_path_for(resource)
-    new_user_session_path # 新規登録後はログインページへ
-  end
-  
-  # ログイン後のリダイレクト先
-  def after_sign_in_path_for(resource)
-    new_diary_entry_path # 日記作成ページへ
-  end
-  
-  # アカウント更新後のリダイレクト先
-  def after_update_path_for(resource)
-    diaries_path # 日記一覧ページ
-=======
 
   private
 
@@ -113,6 +71,5 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # Strong Parameters：アカウント更新用
   def account_update_params
     params.require(:user).permit(:username, :email, :password, :password_confirmation, :current_password, :image)
->>>>>>> login_logout_registration
   end
 end
