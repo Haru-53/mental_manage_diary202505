@@ -93,10 +93,12 @@
 
 <div class="share-section mt-3">
   <!-- X (Twitter) 共有ボタン -->
-　<%= link_to "https://twitter.com/intent/tweet?text=#{ERB::Util.url_encode(@twitter_share_text + ' この日記はこのアプリで書きました✍️')}&url=#{ERB::Util.url_encode('https://mental-manage-diary202505.onrender.com/')}&hashtags=3good things,日記,メンタル管理",
-              target: "_blank",
-              rel: "noopener noreferrer",
-              class: "btn btn-primary share-btn twitter-share" do %>
+  <%= link_to(
+    "https://twitter.com/intent/tweet?text=#{ERB::Util.url_encode(@twitter_share_text + '✍️')}&url=#{ERB::Util.url_encode('https://mental-manage-diary202505.onrender.com/')}&hashtags=#{ERB::Util.url_encode('3goodthings,日記,メンタル管理')}",
+    target: "_blank",
+    rel: "noopener noreferrer",
+    class: "btn btn-primary share-btn twitter-share"
+  ) do %>
     <i class="fab fa-x-twitter me-1"></i> に投稿する
   <% end %>
 </div>

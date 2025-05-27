@@ -9,9 +9,23 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
 
-    <!-- Google Fonts: 落ち着いたフォント -->
+    <!-- ✅ OGP メタタグ -->
+    <meta property="og:title" content="3good things メンタル管理日記" />
+    <meta property="og:description" content="毎日3つの良かったことを記録して、心の健康を整える日記アプリです。" />
+    <meta property="og:image" content="<%= image_url('ogp.jpg') %>" />
+    <meta property="og:url" content="<%= request.original_url %>" />
+    <meta property="og:type" content="website" />
+
+    <!-- ✅ Twitterカード用メタタグ -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@Haru34631349452" />
+    <meta name="twitter:title" content="3good things メンタル管理日記" />
+    <meta name="twitter:description" content="毎日3つの良かったことを記録して、心の健康を整える日記アプリです。" />
+    <meta name="twitter:image" content="<%= image_url('ogp.jpg') %>" />
+
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
-    
+
     <!-- Bootstrap CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -136,61 +150,57 @@
       .alert {
         margin-top: 20px;
       }
-      <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
 
       /* ソーシャルアイコンのスタイル */
-.social-icons {
-  display: flex;
-  align-items: center;
-}
+      .social-icons {
+        display: flex;
+        align-items: center;
+      }
 
-.social-icon {
-  color: white;
-  font-size: 1.2rem;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.1);
-}
+      .social-icon {
+        color: white;
+        font-size: 1.2rem;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.1);
+      }
 
-.social-icon:hover {
-  color: white;
-  background-color: rgba(255, 255, 255, 0.2);
-  transform: translateY(-2px);
-}
+      .social-icon:hover {
+        color: white;
+        background-color: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+      }
 
-/* X (Twitter) 専用のホバー色 */
-.social-icon:hover .fa-x-twitter {
-  color: #1DA1F2;
-}
+      .social-icon:hover .fa-x-twitter {
+        color: #1DA1F2;
+      }
 
-/* GitHub 専用のホバー色 */
-.social-icon:hover .fa-github {
-  color: #333;
-}
+      .social-icon:hover .fa-github {
+        color: #333;
+      }
 
-/* レスポンシブ対応 */
-@media (max-width: 768px) {
-  .footer-info {
-    flex-direction: column;
-    text-align: center;
-  }
-  
-  .author-info {
-    margin-right: 0 !important;
-    margin-bottom: 10px;
-  }
-  
-  .social-icons {
-    justify-content: center;
-    margin-top: 5px;
-  }
-}
+      @media (max-width: 768px) {
+        .footer-info {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .author-info {
+          margin-right: 0 !important;
+          margin-bottom: 10px;
+        }
+
+        .social-icons {
+          justify-content: center;
+          margin-top: 5px;
+        }
+      }
     </style>
   </head>
 
@@ -211,8 +221,8 @@
           <% if user_signed_in? %>
             <%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "btn btn-outline-light btn-sm me-2" %>
             <% if content_for?(:meta_tags) %>
-  　　　　　　<%= yield :meta_tags %>
-　　　　　　　<% end %>
+              <%= yield :meta_tags %>
+            <% end %>
           <% end %>
 
           <div class="hamburger-menu">
@@ -243,43 +253,39 @@
     <!-- メイン -->
     <div class="main-content-wrapper">
       <div class="container">
-
         <div class="content-container">
           <%= yield %>
         </div>
       </div>
     </div>
 
-<!-- フッター -->
-<footer class="site-footer">
-  <div class="footer-container">
-    <div class="footer-links mb-2">
-      <%= link_to "📩 お問い合わせ・ご要望", contact_path, class: "footer-link" %>
-      <%= link_to "🎷 お知らせ・更新情報", announcements_path, class: "footer-link" %>
-    </div>
-    <div class="footer-info d-flex justify-content-center align-items-center flex-wrap">
-      <div class="author-info me-3">
-        <p class="mb-1">最終更新日: <%= Date.today.strftime('%Y年%m月%d日') %></p>
-        <div class="d-flex align-items-center justify-content-center">
-          <span class="me-2">author: haru</span>
-          <!-- ソーシャルアイコン -->
-          <div class="social-icons">
-            <%= link_to "https://x.com/Haru34631349452", target: "_blank", rel: "noopener noreferrer", class: "social-icon me-2", title: "X (Twitter)" do %>
-              <i class="fab fa-x-twitter"></i>
-            <% end %>
-            <%= link_to "https://github.com/Haru-53", target: "_blank", rel: "noopener noreferrer", class: "social-icon", title: "GitHub" do %>
-              <i class="fab fa-github"></i>
-            <% end %>
+    <!-- フッター -->
+    <footer class="site-footer">
+      <div class="footer-container">
+        <div class="footer-links mb-2">
+          <%= link_to "📩 お問い合わせ・ご要望", contact_path, class: "footer-link" %>
+          <%= link_to "🎷 お知らせ・更新情報", announcements_path, class: "footer-link" %>
+        </div>
+        <div class="footer-info d-flex justify-content-center align-items-center flex-wrap">
+          <div class="author-info me-3">
+            <p class="mb-1">最終更新日: <%= Date.today.strftime('%Y年%m月%d日') %></p>
+            <div class="d-flex align-items-center justify-content-center">
+              <span class="me-2">author: haru</span>
+              <div class="social-icons">
+                <%= link_to "https://x.com/Haru34631349452", target: "_blank", rel: "noopener noreferrer", class: "social-icon me-2", title: "X (Twitter)" do %>
+                  <i class="fab fa-x-twitter"></i>
+                <% end %>
+                <%= link_to "https://github.com/Haru-53", target: "_blank", rel: "noopener noreferrer", class: "social-icon", title: "GitHub" do %>
+                  <i class="fab fa-github"></i>
+                <% end %>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</footer>
+    </footer>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
-
-
