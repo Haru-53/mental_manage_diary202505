@@ -2,7 +2,6 @@ class User < ApplicationRecord
   # Deviseのモジュール
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :trackable,
          :omniauthable, omniauth_providers: %i[google_oauth2 twitter line]
 
   # アソシエーション

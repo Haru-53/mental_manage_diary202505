@@ -18,33 +18,39 @@ class DiaryEntriesController < ApplicationController
     else
       @diary_entry = DiaryEntry.new(date: params[:date])
     end
+    # Twitter共有用のテキストを定義
+    @twitter_share_text = "3good things メンタル管理日記を書きました"
   end
 
   # 編集フォーム（new.html.erbを再利用）
   def edit
     @diary_entry = DiaryEntry.find(params[:id])
+    # Twitter共有用のテキストを定義（editでも使う場合）
+    @twitter_share_text = "3good things メンタル管理日記を書きました"
     render :new
   end
 
   # 新規作成処理
-def create
-  # 既に同じ日付のエントリーがあるか確認
-  existing_entry = DiaryEntry.find_by(date: diary_entry_params[:date], user_id: current_user.id)
+  def create
+    # 既に同じ日付のエントリーがあるか確認
+    existing_entry = DiaryEntry.find_by(date: diary_entry_params[:date], user_id: current_user.id)
 
-  if existing_entry
-    # すでにある場合は更新（例：good_things_arrayなども対応するなら更新処理を追加）
-    flash[:alert] = "この日の日記はすでに存在します。編集してください。"
-    redirect_to edit_diary_entry_path(existing_entry)
-  else
-    @diary_entry = current_user.diary_entries.new(diary_entry_params)
-    if @diary_entry.save
-      flash[:notice] = "日記を保存しました"
-      redirect_to calendar_diary_entries_path
+    if existing_entry
+      # すでにある場合は更新（例：good_things_arrayなども対応するなら更新処理を追加）
+      flash[:alert] = "この日の日記はすでに存在します。編集してください。"
+      redirect_to edit_diary_entry_path(existing_entry)
     else
-      render :new
+      @diary_entry = current_user.diary_entries.new(diary_entry_params)
+      if @diary_entry.save
+        flash[:notice] = "日記を保存しました"
+        redirect_to calendar_diary_entries_path
+      else
+        # エラー時も共有テキストを設定
+        @twitter_share_text = "3good things メンタル管理日記を書きました"
+        render :new
+      end
     end
   end
-end
 
   # 更新処理
   def update
@@ -55,6 +61,8 @@ end
       redirect_to calendar_diary_entries_path
     else
       flash.now[:alert] = "更新に失敗しました。"
+      # エラー時も共有テキストを設定
+      @twitter_share_text = "3good things メンタル管理日記を書きました"
       render :edit
     end
   end

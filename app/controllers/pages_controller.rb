@@ -14,4 +14,9 @@ class PagesController < ApplicationController
     # デモ機能のための特別なロジックがあれば記述
     # 例: サンプルデータの読み込みなど
   end
+
+  #Xでの投稿用のページ
+  def share
+    # アプリ紹介用の静的ページ
+  end
 end

@@ -7,9 +7,9 @@
 
   <div class="diary-header">
     <h1 class="text-center mb-4">今日はどんな日でしたか？</h1>
-<div class="date-display text-center mb-4">
-  <span class="current-date">
-    <%= (@diary_entry.date || Date.today).strftime('%Y年%m月%d日') %>
+    <div class="date-display text-center mb-4">
+      <span class="current-date">
+        <%= (@diary_entry.date || Date.today).strftime('%Y年%m月%d日') %>
       </span>
     </div>
   </div>
@@ -25,6 +25,7 @@
         </ul>
       </div>
     <% end %>
+
     <%= form.date_field :date, value: (@diary_entry.date || Date.today), class: "form-control" %>
 
     <div class="card mb-4 shadow-sm">
@@ -75,7 +76,7 @@
               <small>5 (中)</small>
               <small>10 (高)</small>
             </div>
-           <%= form.range_field :happiness_level, min: 1, max: 10, class: "form-range", value: @diary_entry.happiness_level || 5 %>
+            <%= form.range_field :happiness_level, min: 1, max: 10, class: "form-range", value: @diary_entry.happiness_level || 5 %>
           </div>
           <div class="text-center mt-2">
             <div id="happiness-value"><%= @diary_entry.happiness_level || 5 %></div>
@@ -88,93 +89,127 @@
       <%= form.submit "日記を保存する", class: "btn btn-primary btn-lg px-5" %>
     </div>
   <% end %>
+</div>
 
+<div class="share-section mt-3">
+  <!-- X (Twitter) 共有ボタン -->
+　<%= link_to "https://twitter.com/intent/tweet?text=#{ERB::Util.url_encode(@twitter_share_text + ' この日記はこのアプリで書きました✍️')}&url=#{ERB::Util.url_encode('https://mental-manage-diary202505.onrender.com/')}&hashtags=3good things,日記,メンタル管理",
+              target: "_blank",
+              rel: "noopener noreferrer",
+              class: "btn btn-primary share-btn twitter-share" do %>
+    <i class="fab fa-x-twitter me-1"></i> に投稿する
+  <% end %>
 </div>
 
 <style>
-  :root {
-    --main-blue: #003366;
-    --accent-pink-orange: #FF6B6B;
-  }
+:root {
+  --main-blue: #003366;
+  --accent-pink-orange: #FF6B6B;
+}
 
-  .diary-form-container {
-    max-width: 800px;
-    margin: 0 auto;
-  }
+.diary-form-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
 
-  .date-display {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #fff;
-    background-color: var(--accent-pink-orange);
-    padding: 10px;
-    border-radius: 8px;
-    display: inline-block;
-  }
+.date-display {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: var(--accent-pink-orange);
+  padding: 10px;
+  border-radius: 8px;
+  display: inline-block;
+}
 
-  .card-header {
-    background-color: var(--main-blue) !important;
-    color: #fff;
-  }
+.card-header {
+  background-color: var(--main-blue) !important;
+  color: #fff;
+}
 
-  .card-header h3 {
-    font-size: 1.25rem;
-  }
+.card-header h3 {
+  font-size: 1.25rem;
+}
 
-  .happiness-level-container {
-    padding: 10px 20px;
-  }
+.happiness-level-container {
+  padding: 10px 20px;
+}
 
-  #happiness-value {
-    font-size: 2rem;
-    font-weight: bold;
-    color: var(--main-blue);
-  }
+#happiness-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--main-blue);
+}
 
-  .form-actions .btn {
-    background-color: var(--accent-pink-orange);
-    border-color: var(--accent-pink-orange);
-    color: #fff;
-    transition: all 0.3s;
-  }
+.form-actions .btn {
+  background-color: var(--accent-pink-orange);
+  border-color: var(--accent-pink-orange);
+  color: #fff;
+  transition: all 0.3s;
+}
 
-  .form-actions .btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    background-color: #e85b5b;
-    border-color: #e85b5b;
-  }
+.form-actions .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  background-color: #e85b5b;
+  border-color: #e85b5b;
+}
+
+.share-section {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
+  text-align: center; /* 中央寄せ */
+}
+
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 10px;
+  min-width: 120px;
+  justify-content: center;
+}
+
+.twitter-share {
+  background-color: var(--main-blue);
+  border-color: var(--main-blue);
+  display: block;         /* ボタンをブロック要素に */
+  margin: 0 auto;          /* 左右中央寄せ */
+  width: fit-content;      /* 必要最小限の幅に */
+  padding: 10px 20px;
+  color: white;
+  text-decoration: none;
+}
+
+.twitter-share:hover {
+  background-color: #002244;
+  border-color: #002244;
+}
 </style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // 正しいセレクタを使用する
   const happinessRange = document.querySelector('input[name="diary_entry[happiness_level]"]');
   const happinessValue = document.getElementById('happiness-value');
 
-  // 日付フィールドと表示要素の正しいセレクタ
   const dateField = document.querySelector('input[type="date"]');
   const currentDateDisplay = document.querySelector('.current-date');
 
-  // 幸福度スライダーの値表示
   if (happinessRange && happinessValue) {
-    // 初期値を設定
     happinessValue.textContent = happinessRange.value;
-    
-    // イベントリスナーの設定
     happinessRange.addEventListener('input', function() {
       happinessValue.textContent = this.value;
     });
   }
 
-  // カレンダー日付が変わったら表示も更新
   if (dateField && currentDateDisplay) {
     dateField.addEventListener('change', function() {
       const selectedDate = new Date(this.value);
       if (!isNaN(selectedDate)) {
         const formattedDate = selectedDate.getFullYear() + '年' +
-                             (selectedDate.getMonth() + 1) + '月' +
-                             selectedDate.getDate() + '日';
+                              (selectedDate.getMonth() + 1) + '月' +
+                              selectedDate.getDate() + '日';
         currentDateDisplay.textContent = formattedDate;
       }
     });
