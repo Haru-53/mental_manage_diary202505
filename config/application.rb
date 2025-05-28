@@ -17,6 +17,12 @@ module MentalManageDiary2025
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks])
 
+      # Sassコンパイルを無効化
+    config.assets.css_compressor = nil
+    config.sass.style = :expanded
+    config.sass.line_comments = false
+  end
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
