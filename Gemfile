@@ -36,7 +36,7 @@ gem "omniauth-facebook"             # Facebook用
 gem "omniauth-twitter"             # X(Twitter)用
 gem "omniauth-line"                 # LINE用
 gem "dotenv-rails"                  # 環境変数管理
-
+gem "tailwindcss-rails"
 # Use importmap
 gem "importmap-rails"
 
