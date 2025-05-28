@@ -22,7 +22,7 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "bootsnap", require: false
 # SassC for SCSS compilation
 gem 'tailwindcss-rails'
-gem "tailwindcss-ruby", "3.4.17"
+gem "tailwindcss-ruby", "4.1.7"
 
 # SNSログイン機能
 gem "devise"                         # ログイン、ログアウト、新規登録
