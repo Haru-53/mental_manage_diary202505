@@ -21,8 +21,6 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 # Reduces boot times through caching
 gem "bootsnap", require: false
 # SassC for SCSS compilation
-gem "sassc-rails"
-# TailwindCSS support (移動しました: テスト以外でも使う可能性が高いので)
 gem 'tailwindcss-rails'
 gem "tailwindcss-ruby", "3.4.17"
 
