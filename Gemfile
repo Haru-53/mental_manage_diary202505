@@ -16,6 +16,7 @@ gem "turbo-rails"
 gem "stimulus-rails"
 # Build JSON APIs with ease
 gem "jbuilder"
+gem 'sassc-rails'
 # Windows does not include zoneinfo files
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 # Reduces boot times through caching
