@@ -18,14 +18,12 @@ module MentalManageDiary2025
     
     # Sassコンパイルを無効化
     config.assets.css_compressor = nil
-    config.sass.style = :expanded
-    config.sass.line_comments = false
     
     # 利用可能な言語のリスト
     config.i18n.available_locales = [:ja, :en]
     
     # 翻訳ファイルが見つからない場合にエラーを発生させない
-    config.i18n.fallbacks = true
+    config.i18n.fallbacks = true 
   end
 end
 
