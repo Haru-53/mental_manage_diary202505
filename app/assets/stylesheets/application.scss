@@ -30,7 +30,7 @@ footer, .footer {
 
 /* アクセントカラーを使用する要素 */
 .accent-color, .btn-accent, .nav-highlight, .badge {
-  background-color: #ff6b6b; /* オレンジピンク系 */
+  background-color: #e55a5a; /* オレンジピンク系 */
   color: white;
 }
 
@@ -52,7 +52,7 @@ footer, .footer {
   margin-bottom: 30px;
 }
 .accent-color, .btn-accent, .nav-highlight, .badge {
-  background-color: #ff6b6b;
+  background-color: #e55a5a;
   color: white;
   padding: 12px 24px;
   border-radius: 6px;
@@ -62,7 +62,7 @@ footer, .footer {
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: darken(#ff6b6b, 10%);
+    background-color: darken(#e55a5a, 10%);
   }
 }
 body {
@@ -76,7 +76,7 @@ body {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
   &:hover {
-    background-color: darken(#ff6b6b, 10%);
+    background-color: darken(#e55a5a, 10%);
     transform: translateY(-2px);
   }
 }
