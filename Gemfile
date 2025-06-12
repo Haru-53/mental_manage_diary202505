@@ -16,13 +16,14 @@ gem "turbo-rails"
 gem "stimulus-rails"
 # Build JSON APIs with ease
 gem "jbuilder"
+gem 'sassc-rails'
 # Windows does not include zoneinfo files
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 # Reduces boot times through caching
 gem "bootsnap", require: false
 # SassC for SCSS compilation
 gem 'tailwindcss-rails'
-gem "tailwindcss-ruby", "3.4.17"
+gem "tailwindcss-ruby", "4.1.8"
 
 # SNSログイン機能
 gem "devise"                         # ログイン、ログアウト、新規登録
