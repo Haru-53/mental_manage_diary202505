@@ -23,14 +23,7 @@ gem "stimulus-rails"
 
 # Build JSON APIs with ease
 gem "jbuilder"
-<<<<<<< HEAD
 gem 'sassc-rails'
-=======
-
-# Use Tailwind CSS for styling
-gem 'tailwindcss-rails'
-
->>>>>>> e66a8ed (change color)
 # Windows does not include zoneinfo files
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
