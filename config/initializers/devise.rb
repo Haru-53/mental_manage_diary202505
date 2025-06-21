@@ -318,10 +318,10 @@ Devise.setup do |config|
                   ENV['GOOGLE_CLIENT_SECRET'],
                   scope: 'email,profile'
                   
-  config.omniauth :twitter, 
-                  ENV['TWITTER_CLIENT_ID'], 
-                  ENV['TWITTER_CLIENT_SECRET'],
-                  scope: 'tweet.read users.read'
+  # config.omniauth :twitter, 
+                  # ENV['TWITTER_CLIENT_ID'], 
+                 # ENV['TWITTER_CLIENT_SECRET'],
+                 # scope: 'tweet.read users.read'
                   
   config.omniauth :line, 
                   ENV['LINE_CLIENT_ID'], 
