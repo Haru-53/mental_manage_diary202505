@@ -85,3 +85,19 @@ production:
   database: myapp_production
   username: myapp
   password: <%= ENV["MYAPP_DATABASE_PASSWORD"] %>
+
+
+services:
+  - type: web
+    name: mental_manage_diary202505
+    env: ruby
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "bundle exec rails server"
+    postDeployCommand: "bundle exec rails db:migrate"
+    envVars:
+      - key: DATABASE_URL
+        value: postgresql://postgres:haru2025@aws-0-ap-southeast-1.pooler.supabase.co:5432/postgres
+      - key: RAILS_ENV
+        value: production
+      - key: RAILS_SERVE_STATIC_FILES
+        value: true

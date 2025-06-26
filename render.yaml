@@ -5,3 +5,14 @@ services:
     buildCommand: "./bin/render-build.sh"
     startCommand: "bundle exec rails server"
     postDeployCommand: "bundle exec rails db:migrate"
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: RAILS_ENV
+        value: production
+      - key: RAILS_MASTER_KEY
+        fromService:
+          type: web
+          name: mental_manage_diary202505
+          property: RAILS_MASTER_KEY
+          
