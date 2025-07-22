@@ -2,11 +2,9 @@
 <html>
   <head>
     <title>3good things メンタル管理日記</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
 
@@ -152,7 +150,6 @@
         margin-top: 20px;
       }
 
-      /* ソーシャルアイコンのスタイル */
       .social-icons {
         display: flex;
         align-items: center;
@@ -256,6 +253,13 @@
       <div class="container">
         <div class="content-container">
           <%= yield %>
+
+          <!-- ✅ ここにレスポンシブ表示用の見出しとカード -->
+          <h1 class="text-xl md:text-4xl mb-4">タイトル</h1>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-red-200 p-4 rounded">カード1</div>
+            <div class="bg-green-200 p-4 rounded">カード2</div>
+          </div>
         </div>
       </div>
     </div>
