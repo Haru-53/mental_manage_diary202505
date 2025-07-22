@@ -11,3 +11,6 @@ bundle install
 bundle exec rails assets:precompile
 bundle exec rails assets:clean
 bundle exec rails db:migrate
+
+#実行権限
+chmod +x bin/render-build.sh
