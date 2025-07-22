@@ -21,6 +21,17 @@ gem "turbo-rails"
 # Hotwire's modest JavaScript framework
 gem "stimulus-rails"
 
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+  gem 'bundle-audit', require: false
+end
+
+group :test do
+  gem 'simplecov', require: false
+  gem 'rspec_junit_formatter'
+end
+
 # Build JSON APIs with ease
 gem "jbuilder"
 gem 'sassc-rails'

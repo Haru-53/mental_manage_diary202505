@@ -85,6 +85,11 @@ GEM
     brakeman (7.0.2)
       racc
     builder (3.3.0)
+    bundle-audit (0.1.0)
+      bundler-audit
+    bundler-audit (0.9.2)
+      bundler (>= 1.2.0, < 3)
+      thor (~> 1.0)
     capybara (3.40.0)
       addressable
       matrix
@@ -110,12 +115,19 @@ GEM
     devise-i18n (1.13.0)
       devise (>= 4.9.0)
       rails-i18n
+    diff-lcs (1.6.2)
+    docile (1.4.1)
     dotenv (3.1.8)
     dotenv-rails (3.1.8)
       dotenv (= 3.1.8)
       railties (>= 6.1)
     drb (2.2.1)
     erubi (1.13.1)
+    factory_bot (6.5.4)
+      activesupport (>= 6.1.0)
+    factory_bot_rails (6.5.0)
+      factory_bot (~> 6.5)
+      railties (>= 6.1.0)
     faraday (2.13.1)
       faraday-net_http (>= 2.0, < 3.5)
       json
@@ -296,6 +308,25 @@ GEM
       actionpack (>= 5.2)
       railties (>= 5.2)
     rexml (3.4.1)
+    rspec-core (3.13.5)
+      rspec-support (~> 3.13.0)
+    rspec-expectations (3.13.5)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.13.0)
+    rspec-mocks (3.13.5)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.13.0)
+    rspec-rails (8.0.1)
+      actionpack (>= 7.2)
+      activesupport (>= 7.2)
+      railties (>= 7.2)
+      rspec-core (~> 3.13)
+      rspec-expectations (~> 3.13)
+      rspec-mocks (~> 3.13)
+      rspec-support (~> 3.13)
+    rspec-support (3.13.4)
+    rspec_junit_formatter (0.6.0)
+      rspec-core (>= 2, < 4, != 2.12.0)
     rubocop (1.75.4)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
@@ -341,6 +372,12 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    simplecov (0.22.0)
+      docile (~> 1.1)
+      simplecov-html (~> 0.11)
+      simplecov_json_formatter (~> 0.1)
+    simplecov-html (0.13.2)
+    simplecov_json_formatter (0.1.4)
     snaky_hash (2.0.1)
       hashie
       version_gem (~> 1.1, >= 1.1.1)
@@ -410,11 +447,13 @@ PLATFORMS
 DEPENDENCIES
   bootsnap
   brakeman
+  bundle-audit
   capybara
   debug
   devise
   devise-i18n
   dotenv-rails
+  factory_bot_rails
   importmap-rails
   jbuilder
   omniauth
@@ -425,9 +464,12 @@ DEPENDENCIES
   pg (~> 1.1)
   puma (>= 5.0)
   rails (~> 7.2.1)
+  rspec-rails
+  rspec_junit_formatter
   rubocop-rails-omakase
   sassc-rails
   selenium-webdriver
+  simplecov
   sprockets-rails
   stimulus-rails
   tailwindcss-rails (~> 4.2)
