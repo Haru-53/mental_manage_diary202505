@@ -1,7 +1,6 @@
 
-  database: <%= ENV.fetch("DATABASE_URL") %>
-  username: <%= ENV.fetch("DATABASE_USERNAME") %>
-  password: <%= ENV.fetch("DATABASE_PASSWORD") %>
+production:
+  url: <%= ENV.fetch("DATABASE_URL") %>
 変更後（動く）：
 
 yaml
