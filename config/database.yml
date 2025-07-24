@@ -1,28 +1,3 @@
-
-production:
-  url: <%= ENV.fetch("DATABASE_URL") %>
-変更後（動く）：
-
-yaml
-production:
-  <<: *default
-  url: <%= ENV['DATABASE_URL'] %>             # ← Renderが自動で提供する設定を使用
-なぜこの変更で解決するの？
-RenderはDATABASE_URLを自動提供：Renderがデータベースを作ると、DATABASE_URLという環境変数に全ての接続情報をまとめて設定してくれます
-個別設定は不要：DATABASE_HOST、DATABASE_NAMEなどを個別に設定する必要がありません
-シンプルで確実：1行の設定だけで、全ての接続情報が自動で読み込まれます
-次のステップ
-この修正をGitにプッシュ
-Renderで再デプロイ
-これで、データベース接続エラーが解消されるはずです！
-
-
-
-
-
-
-
-
 default: &default
   adapter: postgresql
   encoding: unicode
@@ -30,20 +5,19 @@ default: &default
 
 development:
   <<: *default
-  host: <%= ENV.fetch("DATABASE_HOST") { "localhost" } %>
-  port: <%= ENV.fetch("DATABASE_PORT") { 5432 } %>
-  database: <%= ENV.fetch("DATABASE_NAME") { "myapp_development" } %>
-  username: <%= ENV.fetch("DATABASE_USERNAME") { "postgres" } %>
-  password: <%= ENV.fetch("DATABASE_PASSWORD") { "password" } %>
+  database: mental_manage_diary_development
+  username: <%= ENV['DATABASE_USERNAME'] || 'postgres' %>
+  password: <%= ENV['DATABASE_PASSWORD'] || '' %>
+  host: <%= ENV['DATABASE_HOST'] || 'localhost' %>
 
 test:
   <<: *default
-  host: <%= ENV.fetch("DATABASE_HOST") { "localhost" } %>
-  port: <%= ENV.fetch("DATABASE_PORT") { 5432 } %>
-  database: <%= ENV.fetch("DATABASE_NAME") { "myapp_test" } %>
-  username: <%= ENV.fetch("DATABASE_USERNAME") { "postgres" } %>
-  password: <%= ENV.fetch("DATABASE_PASSWORD") { "password" } %>
+  database: mental_manage_diary_test
+  username: <%= ENV['DATABASE_USERNAME'] || 'postgres' %>
+  password: <%= ENV['DATABASE_PASSWORD'] || '' %>
+  host: <%= ENV['DATABASE_HOST'] || 'localhost' %>
 
 production:
   <<: *default
-  url: <%= ENV['DATABASE_URL'] %>
+  url: <%= ENV['DATABASE_URL'] %>]
+  
