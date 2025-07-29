@@ -314,17 +314,8 @@ Devise.setup do |config|
 
    # OmniAuth設定
   config.omniauth :google_oauth2, 
-                  ENV['GOOGLE_CLIENT_ID'], 
-                  ENV['GOOGLE_CLIENT_SECRET'],
+                  ENV['
+496094329252-75qqf81o9emh9ftotloldk1a2kjt19ub.apps.googleusercontent.com'], 
+                  ENV[''],
                   scope: 'email,profile'
-                  
-  # config.omniauth :twitter, 
-                  # ENV['TWITTER_CLIENT_ID'], 
-                 # ENV['TWITTER_CLIENT_SECRET'],
-                 # scope: 'tweet.read users.read'
-                  
-  config.omniauth :line, 
-                  ENV['LINE_CLIENT_ID'], 
-                  ENV['LINE_CLIENT_SECRET'],
-                  scope: 'profile'
 end

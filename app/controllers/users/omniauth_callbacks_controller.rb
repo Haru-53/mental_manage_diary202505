@@ -1,17 +1,7 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   # Google認証のコールバック
-  def google
+  def google_oauth2
     handle_oauth("Google")
-  end
-
-  # X(Twitter)認証のコールバック
-  def twitter
-    handle_oauth("X")
-  end
-
-  # LINE認証のコールバック
-  def line
-    handle_oauth("LINE")
   end
 
   # 認証失敗時

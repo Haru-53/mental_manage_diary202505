@@ -2,7 +2,7 @@ class User < ApplicationRecord
   # Deviseのモジュール
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :omniauthable, omniauth_providers: %i[google_oauth2  line]
+         :omniauthable, omniauth_providers: %i[google_oauth2]
  #※エラーのため大括弧のなかのエラーは一度外した　twitter
   # アソシエーション
   has_many :diary_entries, dependent: :destroy

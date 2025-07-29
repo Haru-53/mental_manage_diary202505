@@ -53,6 +53,7 @@
   </div>
 <% end %>
 
+<%= link_to "Googleでログイン", user_google_oauth2_omniauth_authorize_path %>
 <% if devise_mapping.confirmable? %>
   <div class="mt-2">
     <%= link_to "確認メールが届いていませんか？", new_confirmation_path(resource_name) %>

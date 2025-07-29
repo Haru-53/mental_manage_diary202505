@@ -27,7 +27,7 @@
   <%= f.label :password_confirmation, "パスワード（確認）", class: "form-label fw-bold" %>
   <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
 
-  <%= f.submit "アカウント登録", class: "btn btn-primary btn-lg" %>
+　<%= f.submit "アカウント登録", class: "btn btn-primary btn-lg mt-4 mb-4" %>
 <% end %>
 
 <p>すでにアカウントをお持ちですか？ <%= link_to "ログイン", new_session_path(resource_name) %></p>
@@ -40,18 +40,6 @@
   <div class="d-flex justify-content-center mb-3">
     <%= link_to "/users/auth/google_oauth2", method: :post, class: "btn btn-outline-danger me-2", data: { turbo: false } do %>
       <i class="fab fa-google"></i> Googleでログイン
-    <% end %>
-  </div>
-
-  <div class="d-flex justify-content-center mb-3">
-    <%= link_to "/users/auth/twitter2", method: :post, class: "btn btn-outline-primary me-2", data: { turbo: false } do %>
-      <i class="fab fa-twitter"></i> Xでログイン
-    <% end %>
-  </div>
-
-  <div class="d-flex justify-content-center mb-3">
-    <%= link_to "/users/auth/line", method: :post, class: "btn btn-outline-success", data: { turbo: false } do %>
-      <i class="fab fa-line"></i> LINEでログイン
     <% end %>
   </div>
 </div>

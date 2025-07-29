@@ -47,8 +47,6 @@ gem "devise-i18n"                   # devise の日本語化
 gem "omniauth"                      # OmniAuthの基本
 gem "omniauth-rails_csrf_protection" # CSRF対策
 gem "omniauth-google-oauth2"        # Google用
-gem 'omniauth-twitter2'            # X(Twitter)用
-gem "omniauth-line"                 # LINE用
 gem "dotenv-rails"                  # 環境変数管理
 
 group :development, :test do
